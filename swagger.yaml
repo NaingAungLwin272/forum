@@ -1,0 +1,2139 @@
+basePath: /
+definitions:
+  request.CsvUserRequest:
+    properties:
+      users:
+        items:
+          $ref: '#/definitions/request.UserRequest'
+        type: array
+    type: object
+  request.LoginRequest:
+    properties:
+      email:
+        maxLength: 200
+        minLength: 1
+        type: string
+      password:
+        maxLength: 200
+        minLength: 1
+        type: string
+    required:
+      - email
+      - password
+    type: object
+  request.AuthMailRequest:
+    properties:
+      email:
+        format: email
+        type: string
+    type: object
+  request.PasswordRequest:
+    properties:
+      password:
+        maxLength: 200
+        minLength: 1
+        type: string
+    required:
+      - password
+    type: object
+  request.QuestionRequest:
+    properties:
+      title:
+        type: string
+      description:
+        type: string
+      language_ids:
+        type: array
+        items:
+          type: string
+        example:
+          - 647ffc77d0329109034e843f
+          - 647ffc77d0329109034e843f
+      tag_ids:
+        type: array
+        items:
+          type: string
+        example:
+          - 647ffc77d0329109034e843f
+          - 647ffc77d0329109034e843f
+    type: object
+  request.UserRequest:
+    properties:
+      department_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      team_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      staff_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      name:
+        maxLength: 200
+        minLength: 1
+        type: string
+      display_name:
+        maxLength: 200
+        minLength: 1
+        type: string
+      email:
+        type: string
+        format: email
+      password:
+        maxLength: 200
+        minLength: 1
+        type: string
+      profile:
+        type: string
+      role:
+        type: integer
+        default: '1'
+      about_me:
+        type: string
+      address:
+        type: string
+      phone:
+        type: string
+      dob:
+        type: string
+      mail_subscribe:
+        type: boolean
+    required:
+      - email
+      - name
+      - password
+    type: object
+  response.UserResponse:
+    properties:
+      id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      department_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      team_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      staff_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      name:
+        maxLength: 200
+        minLength: 1
+        type: string
+      display_name:
+        maxLength: 200
+        minLength: 1
+        type: string
+      email:
+        type: string
+        format: email
+      profile:
+        type: string
+      role:
+        type: integer
+        default: '1'
+      about_me:
+        type: string
+      address:
+        type: string
+      phone:
+        type: string
+      dob:
+        type: string
+      mail_subscribe:
+        type: boolean
+      last_login:
+        type: string
+        format: date-time
+      last_post:
+        type: string
+        format: date-time
+      deleted:
+        type: boolean
+        default: false
+    type: object
+  response.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      status:
+        type: string
+    type: object
+  response.UserSummaryResponse:
+    properties:
+      questions:
+        type: integer
+        default: '0'
+      answers:
+        type: integer
+        default: '0'
+      votes:
+        type: integer
+        default: '0'
+      solved:
+        type: integer
+        default: '0'
+      bookmarks:
+        type: integer
+        default: '0'
+      badgess:
+        type: integer
+        default: '0'
+      notifications:
+        type: integer
+        default: '0'
+      messages:
+        type: integer
+        default: '0'
+    type: object
+  response.UserQuestionsResponse:
+    properties:
+      title:
+        type: string
+      language:
+        type: string
+      profile:
+        type: string
+      description:
+        type: string
+      reply:
+        type: integer
+        default: 0
+      votes:
+        type: integer
+        default: 0
+      status:
+        type: string
+        example: solved
+      created_at:
+        type: string
+        format: date-time
+    type: object
+  response.UserBookmarksResponse:
+    properties:
+      title:
+        type: string
+      language:
+        type: string
+      profile:
+        type: string
+      description:
+        type: string
+      reply:
+        type: integer
+        default: 0
+      votes:
+        type: integer
+        default: 0
+      status:
+        type: string
+        example: solved
+      created_at:
+        type: string
+        format: date-time
+    type: object
+  response.UserAnswersResponse:
+    properties:
+      title:
+        type: string
+      language:
+        type: string
+      profile:
+        type: string
+      description:
+        type: string
+      created_at:
+        type: string
+        format: date-time
+    type: object
+  response.UserVotesResponse:
+    properties:
+      title:
+        type: string
+      language:
+        type: string
+      profile:
+        type: string
+      description:
+        type: string
+      created_at:
+        type: string
+        format: date-time
+    type: object
+  response.UserSolvedResponse:
+    properties:
+      title:
+        type: string
+      language:
+        type: string
+      profile:
+        type: string
+      description:
+        type: string
+      created_at:
+        type: string
+        format: date-time
+    type: object
+  response.UserBadesResponse:
+    properties:
+      name:
+        type: string
+      type:
+        type: integer
+      description:
+        type: string
+      owned:
+        type: boolean
+      since:
+        type: string
+        format: date
+    type: object
+  response.UserNotificaitionsResponse:
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      status:
+        type: integer
+      type:
+        type: integer
+      date:
+        type: string
+        format: date
+      link:
+        type: string
+    type: object
+  request.MailRequest:
+    properties:
+      email:
+        type: string
+        format: email
+      subject:
+        type: string
+      link:
+        type: string
+      type:
+        type: integer
+    type: object
+  response.QuestionsResponse:
+    properties:
+      id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      title:
+        type: string
+      user_id:
+        type: string
+        example: '64af584dbbf0676f2b9d851f'
+      language_ids:
+        type: array
+        items:
+          type: string
+        example: ['64af584dbbf0676f2b9d851f']
+      tag_ids:
+        type: array
+        items:
+          type: string
+        example: ['64af5864bbf0676f2b9d8523']
+      view:
+        type: integer
+      vote:
+        type: integer
+      reply:
+        type: integer
+      status:
+        type: boolean
+        example: false
+      created_at:
+        type: string
+        format: date
+      updated_at:
+        type: string
+        format: date
+    type: object
+  request.QuestionFilterRequest:
+    properties:
+      language_ids:
+        type: array
+        items:
+          type: string
+        example:
+          - 647ffc77d0329109034e843f
+          - 647ffc77d0329109034e843f
+      tag_ids:
+        type: array
+        items:
+          type: string
+        example:
+          - 647ffc77d0329109034e843f
+          - 647ffc77d0329109034e843f
+      user_ids:
+        type: array
+        items:
+          type: string
+        example:
+          - 647ffc77d0329109034e843f
+          - 647ffc77d0329109034e843f
+      title:
+        type: string
+    type: object
+  request.QuestionCreateRequest:
+    properties:
+      user_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      title:
+        type: string
+      description:
+        type: string
+      language_ids:
+        type: array
+        items:
+          type: string
+        example:
+          - 647ffc77d0329109034e843f
+          - 647ffc77d0329109034e843f
+      tag_ids:
+        type: array
+        items:
+          type: string
+        example:
+          - 647ffc77d0329109034e843f
+          - 647ffc77d0329109034e843f
+    type: object
+  request.QuestionVoteRequest:
+    properties:
+      question_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      comment_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      user_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+    type: object
+  request.QuestionViewRequest:
+    properties:
+      question_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      user_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+    type: object
+  response.QuestionDetailResponse:
+    properties:
+      id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      user_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      title:
+        type: string
+      language_ids:
+        type: array
+        items:
+          type: string
+        example:
+          - 647ffc77d0329109034e843f
+          - 647ffc77d0329109034e843f
+      tag_ids:
+        type: array
+        items:
+          type: string
+        example:
+          - 647ffc77d0329109034e843f
+          - 647ffc77d0329109034e843f
+      created_at:
+        type: string
+        format: date-time
+      upated_at:
+        type: string
+        format: date-time
+      comments:
+        items:
+          $ref: '#/definitions/response.QuestionCommentResponse'
+        type: array
+    type: object
+  response.QuestionCommentResponse:
+    properties:
+      id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      user_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      question_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      description:
+        type: string
+      sort:
+        type: integer
+        example: 1
+      view_count:
+        type: integer
+        example: 1
+      vote_count:
+        type: integer
+        example: 1
+      solution:
+        type: boolean
+        example: false
+      vote:
+        type: boolean
+        example: false
+      bookmark:
+        type: boolean
+        example: false
+      created_at:
+        type: string
+        format: date-time
+      upated_at:
+        type: string
+        format: date-time
+      reply_comments:
+        type: array
+        items:
+          properties:
+            id:
+              type: string
+              example: 647ffc77d0329109034e843f
+            user_id:
+              type: string
+              example: 647ffc77d0329109034e843f
+            question_id:
+              type: string
+              example: 647ffc77d0329109034e843f
+            description:
+              type: string
+            sort:
+              type: integer
+              example: 1
+            view_count:
+              type: integer
+              example: 1
+            vote_count:
+              type: integer
+              example: 1
+            solution:
+              type: boolean
+              example: false
+            vote:
+              type: boolean
+              example: false
+            bookmark:
+              type: boolean
+              example: false
+            created_at:
+              type: string
+              format: date-time
+            upated_at:
+              type: string
+              format: date-time
+    type: object
+  request.CommentRequest:
+    properties:
+      user_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      question_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      description:
+        type: string
+      sort:
+        type: integer
+        example: 1
+      view_count:
+        type: integer
+        example: 1
+      vote_count:
+        type: integer
+        example: 1
+      solution:
+        type: boolean
+        example: false
+    type: object
+  request.NotiRequest:
+    properties:
+      user_ids:
+        type: array
+        items:
+          type: string
+        example:
+          - 647ffc77d0329109034e843f
+          - 647ffc77d0329109034e843f
+      type:
+        type: integer
+      name:
+        maxLength: 200
+        minLength: 1
+        type: string
+      description:
+        maxLength: 200
+        minLength: 1
+        type: string
+      link:
+        type: string
+      status:
+        type: boolean
+    type: object
+  response.NotiResponse:
+    properties:
+      id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      user_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      type:
+        type: integer
+      name:
+        maxLength: 200
+        minLength: 1
+        type: string
+      description:
+        maxLength: 200
+        minLength: 1
+        type: string
+      link:
+        type: string
+      status:
+        type: boolean
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+    type: object
+  request.UpdateNotiRequest:
+    properties:
+      name:
+        maxLength: 200
+        minLength: 1
+        type: string
+        example: Sample1
+      description:
+        maxLength: 200
+        minLength: 1
+        type: string
+      link:
+        type: string
+      status:
+        type: boolean
+    type: object
+  request.DepartmentRequest:
+    properties:
+      name:
+        maxLength: 200
+        minLength: 1
+        type: string
+    required:
+      - name
+    type: object
+  response.DepartmentResponse:
+    properties:
+      id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      name:
+        type: string
+    type: object
+  request.TeamRequest:
+    properties:
+      department_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      name:
+        type: string
+        example: DEV1
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+    type: object
+  response.TeamResponse:
+    properties:
+      id:
+        type: string
+      department_id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      name:
+        type: string
+        example: DEV1
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+    type: object
+  request.CategoryRequest:
+    properties:
+      type:
+        type: string
+      name:
+        type: string
+        example: python
+    type: object
+  response.CategoryResponse:
+    properties:
+      id:
+        type: string
+        example: 647ffc77d0329109034e843f
+      name:
+        type: string
+        example: python
+      type:
+        type: integer
+        example: 1
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+    type: object
+  request.FilterUserRequest:
+    properties:
+      page:
+        type: integer
+        example: 1
+      limit:
+        type: integer
+        example: 5
+      display_name:
+        type: string
+        example: John Doe
+      email:
+        type: string
+        example: jhondoe@gmail.com
+      team_id:
+        type: string
+        example: 64acfff219e35f65de9ae82c
+      department_id:
+        type: string
+        example: 64acfff219e35f65de9ae82c
+      name:
+        type: string
+        example: Jhonny Doe
+  request.CountRequest:
+    properties:
+      page:
+        type: integer
+        example: 1
+      limit:
+        type: integer
+        example: 5
+  request.GetCategoryTypeRequest:
+    properties:
+      type:
+        type: integer
+        example: 1
+      page:
+        type: integer
+        example: 2
+      limit:
+        type: integer
+        example: 10
+  response.CountResponse:
+    properties:
+      count:
+        type: integer
+        example: 10
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: mtm-community-forum API in Go using Gin, gRPC
+  title: mtm-community-forum API
+  version: '1.0'
+paths:
+  /api/forget-password:
+    post:
+      consumes:
+        - application/json
+      description: Send mail
+      parameters:
+        - description: Mail Request Body
+          in: body
+          name: AuthMailRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.AuthMailRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Send mail
+      tags:
+        - AUTH
+  /api/login:
+    post:
+      consumes:
+        - application/json
+      description: Authenticates user login
+      parameters:
+        - description: Login Request Body
+          in: body
+          name: LoginRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.LoginRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: User Login
+      tags:
+        - AUTH
+  /api/reset-password:
+    post:
+      consumes:
+        - application/json
+      description: Rest Password
+      parameters:
+        - description: Password Request Body
+          in: body
+          name: PasswordRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.PasswordRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Rest password
+      tags:
+        - AUTH
+  /api/questions:
+    get:
+      consumes:
+        - application/json
+      description: Returns question list
+      parameters:
+        - in: query
+          name: page
+          type: integer
+          default: 1
+          description: >-
+            The number of questions to skip before starting to collect the
+            result set
+        - in: query
+          name: limit
+          type: integer
+          default: 10
+          description: The numbers of questions to return
+        - in: query
+          name: ascending
+          type: boolean
+          default: false
+          description: ascending
+        - in: query
+          name: order
+          type: string
+          enum:
+            - view
+            - vote
+            - reply
+            - status
+            - createdAt
+          default: createdAt
+          description: sort
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+             $ref: '#/definitions/response.QuestionsResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Get question list
+      tags:
+        - QUESTION
+  /api/questions/search:
+    post:
+      consumes:
+        - application/json
+      description: Returns question list
+      parameters:
+        - in: query
+          name: page
+          type: integer
+          default: 1
+          description: >-
+            The number of questions to skip before starting to collect the
+            result set
+        - in: query
+          name: limit
+          type: integer
+          default: 10
+          description: The numbers of questions to return
+        - in: query
+          name: ascending
+          type: boolean
+          default: false
+          description: ascending
+        - in: query
+          name: order
+          type: string
+          enum:
+            - view
+            - vote
+            - reply
+            - status
+            - createdAt
+          default: createdAt
+          description: sort
+        - in: body
+          name: PostRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.QuestionFilterRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.QuestionsResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Get question list by filter
+      tags:
+        - QUESTION
+  /api/question/:
+    post:
+      consumes:
+        - application/json
+      description: Create new question
+      parameters:
+        - in: body
+          name: PostRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.QuestionCreateRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Create new question
+      tags:
+        - QUESTION
+  /api/question/{id}:
+    get:
+      description: Returns Found user
+      parameters:
+        - description: Find question by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.QuestionDetailResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Find question by id
+      tags:
+        - QUESTION
+    put:
+      consumes:
+        - application/json
+      description: Update a question
+      parameters:
+        - description: Post Request Body
+          in: body
+          name: PostRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.QuestionRequest'
+        - description: Update question by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Update a post
+      tags:
+        - QUESTION
+    delete:
+      description: Returns nil
+      parameters:
+        - description: Delete question by id(soft delete)
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Delete a question(soft delete)
+      tags:
+        - QUESTION
+  /api/question/vote:
+    post:
+      consumes:
+        - application/json
+      description: create vote count for question's comment
+      parameters:
+        - description: Post Request Body
+          in: body
+          name: PostRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.QuestionVoteRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: create vote count for question's comment
+      tags:
+        - QUESTION
+  /api/question/bookmark:
+    post:
+      consumes:
+        - application/json
+      description: create bookmark for question
+      parameters:
+        - description: Post Request Body
+          in: body
+          name: PostRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.QuestionVoteRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: create bookmark for question
+      tags:
+        - QUESTION
+  /api/question/view:
+    post:
+      consumes:
+        - application/json
+      description: create view count for question
+      parameters:
+        - description: Post Request Body
+          in: body
+          name: PostRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.QuestionViewRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: create view count for question
+      tags:
+        - QUESTION
+  /api/question/mention:
+    post:
+      consumes:
+        - application/json
+      description: create mention for question
+      parameters:
+        - description: Post Request Body
+          in: body
+          name: PostRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.QuestionVoteRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: create mention for question
+      tags:
+        - QUESTION
+  /api/comment/:
+    post:
+      consumes:
+        - application/json
+      description: Create new comment
+      parameters:
+        - in: body
+          name: PostRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.CommentRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Create new comment
+      tags:
+        - COMMENT
+  /api/comment/{id}:
+    put:
+      consumes:
+        - application/json
+      description: Update a comment
+      parameters:
+        - description: Post Request Body
+          in: body
+          name: PostRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.CommentRequest'
+        - description: Update question by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Update a comment
+      tags:
+        - COMMENT
+    delete:
+      description: Returns nil
+      parameters:
+        - description: Delete comment by id(soft delete)
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Delete a question(soft delete)
+      tags:
+        - COMMENT
+  /api/user:
+    post:
+      consumes:
+        - application/json
+      description: Creates a new user
+      parameters:
+        - description: User Request Body
+          in: body
+          name: UserRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.UserRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Create a new user
+      tags:
+        - USER
+  /api/users:
+    get:
+      description: Returns user list
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.UserResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Get user list
+      tags:
+        - USER
+  /api/user/{id}:
+    delete:
+      description: Returns nil
+      parameters:
+        - description: Delete user by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Delete a user
+      tags:
+        - USER
+    get:
+      description: Returns Found user
+      parameters:
+        - description: Find user by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UserResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Find a user by id
+      tags:
+        - USER
+    put:
+      consumes:
+        - application/json
+      description: Update a user
+      parameters:
+        - description: User Request Body
+          in: body
+          name: UserRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.UserRequest'
+        - description: Update user by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Update a user
+      tags:
+        - USER
+  /api/users/csv:
+    post:
+      consumes:
+        - application/json
+      description: Create new csv users
+      parameters:
+        - description: User List Request Body
+          in: body
+          name: CsvUserRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.CsvUserRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Create new csv users
+      tags:
+        - USER
+  /api/user/{id}/summary:
+    get:
+      description: Returns Summary
+      parameters:
+        - description: Find summary by user id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UserSummaryResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Find summary by user id
+      tags:
+        - USER
+  /api/user/{id}/questions:
+    get:
+      description: Returns Questions
+      parameters:
+        - description: Find questions by user id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.UserQuestionsResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Find questions by user id
+      tags:
+        - USER
+  /api/user/{id}/bookmarks:
+    get:
+      description: Returns Bookmarks
+      parameters:
+        - description: Find bookmarks by user id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.UserBookmarksResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Find bookmarks by user id
+      tags:
+        - USER
+  /api/user/{id}/answers:
+    get:
+      description: Returns Answers
+      parameters:
+        - description: Find answers by user id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.UserAnswersResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Find bookmarks by user id
+      tags:
+        - USER
+  /api/user/{id}/votes:
+    get:
+      description: Returns Votes
+      parameters:
+        - description: Find votes by user id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.UserVotesResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Find votes by user id
+      tags:
+        - USER
+  /api/user/{id}/solved:
+    get:
+      description: Returns solved
+      parameters:
+        - description: Find solved by user id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.UserSolvedResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Find solved by user id
+      tags:
+        - USER
+  /api/user/{id}/badges:
+    get:
+      description: Returns badges
+      parameters:
+        - description: Find badges by user id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.UserBadesResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Find badges by user id
+      tags:
+        - USER
+  /api/user/{id}/notifications:
+    get:
+      description: Returns notifications
+      parameters:
+        - description: Find notifications by user id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.UserNotificaitionsResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Find notifications by user id
+      tags:
+        - USER
+  /api/users/search:
+    post:
+      consumes:
+        - application/json
+      description: Returns filtered users
+      parameters:
+        - in: body
+          name: FilterRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.FilterUserRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.UserResponse'
+      summary: Filter users
+      tags:
+        - USER
+  /api/users/count:
+    post:
+      consumes:
+        - application/json
+      description: Returns filtered users
+      parameters:
+        - in: body
+          name: FilterRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.FilterUserRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CountResponse'
+      summary: Get User Count
+      tags:
+        - USER
+  /api/email/send-message:
+    post:
+      consumes:
+        - application/json
+      description: Send Notification message
+      parameters:
+        - description: Send notification message
+          in: body
+          name: MailRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.MailRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Send Notification message
+      tags:
+        - MAIL
+  /api/notifications:
+    get:
+      description: Returns user list
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.NotiResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Get notifications list
+      tags:
+        - NOTIFICATION
+  /api/notification:
+    post:
+      consumes:
+        - application/json
+      description: Creates a new notification
+      parameters:
+        - description: Notification Request Body
+          in: body
+          name: Request
+          required: true
+          schema:
+            $ref: '#/definitions/request.NotiRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.NotiResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Create a new notification
+      tags:
+        - NOTIFICATION
+  /api/notification/{id}:
+    delete:
+      description: Returns nil
+      parameters:
+        - description: Delete notification by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Delete a notification
+      tags:
+        - NOTIFICATION
+    get:
+      description: Returns Found notification
+      parameters:
+        - description: Find notification by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.NotiResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Find a notification by id
+      tags:
+        - NOTIFICATION
+    put:
+      consumes:
+        - application/json
+      description: Update a notification
+      parameters:
+        - description: User Request Body
+          in: body
+          name: UserRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.UpdateNotiRequest'
+        - description: Update notification by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Update a notification
+      tags:
+        - NOTIFICATION
+  /api/department:
+    post:
+      consumes:
+        - application/json
+      description: Creates a new department
+      parameters:
+        - description: Department Request Body
+          in: body
+          name: DepartmentRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.DepartmentRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Create a new user
+      tags:
+        - DEPARTMENT
+  /api/departments:
+    get:
+      description: Returns departments list
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.DepartmentResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Get department list
+      tags:
+        - DEPARTMENT
+  /api/department/{id}:
+    delete:
+      description: Returns nil
+      parameters:
+        - description: Delete department by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Delete a department
+      tags:
+        - DEPARTMENT
+    get:
+      description: Returns Found deparment
+      parameters:
+        - description: Find department by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.DepartmentResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Find a department by id
+      tags:
+        - DEPARTMENT
+    put:
+      consumes:
+        - application/json
+      description: Update a department
+      parameters:
+        - description: Department Request Body
+          in: body
+          name: DepartmentRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.DepartmentRequest'
+        - description: Update department by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Update a department
+      tags:
+        - DEPARTMENT
+  /api/departments/count:
+    post:
+      consumes:
+        - application/json
+      description: Return Department Count
+      parameters:
+        - in: body
+          name: DepartmentRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.CountRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CountResponse'
+      summary: Get Department Count
+      tags:
+        - DEPARTMENT
+  /api/teams:
+    get:
+      description: Returns team list
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.TeamResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Get team list
+      tags:
+        - Team
+  /api/team:
+    post:
+      consumes:
+        - application/json
+      description: Creates a new team
+      parameters:
+        - description: Team Request Body
+          in: body
+          name: Request
+          required: true
+          schema:
+            $ref: '#/definitions/request.TeamRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.TeamResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Create a new team
+      tags:
+        - Team
+  /api/team/{id}:
+    delete:
+      description: Returns nil
+      parameters:
+        - description: Delete team by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Delete a team
+      tags:
+        - Team
+    get:
+      description: Returns Found team
+      parameters:
+        - description: Find team by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Find a team by id
+      tags:
+        - Team
+    put:
+      consumes:
+        - application/json
+      description: Update a team
+      parameters:
+        - description: Team Request Body
+          in: body
+          name: UserRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.TeamRequest'
+        - description: Update team by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Update a team
+      tags:
+        - Team
+  /api/teams/count:
+    post:
+      consumes:
+        - application/json
+      description: Return Team Count
+      parameters:
+        - in: body
+          name: TeamRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.CountRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CountResponse'
+      summary: Get Team Count
+      tags:
+        - Team
+  /api/department/{id}/teams:
+    get:
+      description: Returns Found teams
+      parameters:
+        - description: Find team by department id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.TeamResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Find a team by department id
+      tags:
+        - Team
+  /api/categories:
+    get:
+      description: Returns category list
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.CategoryResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Get category list
+      tags:
+        - CATEGORY
+  /api/category:
+    post:
+      consumes:
+        - application/json
+      description: Creates a new team
+      parameters:
+        - description: Team Request Body
+          in: body
+          name: Request
+          required: true
+          schema:
+            $ref: '#/definitions/request.CategoryRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Create a new category
+      tags:
+        - CATEGORY
+  /api/category/{id}:
+    delete:
+      description: Returns nil
+      parameters:
+        - description: Delete categiry by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Delete a category
+      tags:
+        - CATEGORY
+    get:
+      description: Returns Found category
+      parameters:
+        - description: Find category by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CategoryResponse'
+      security:
+        - ApiKeyAuth: []
+      summary: Find a category by id
+      tags:
+        - CATEGORY
+    put:
+      consumes:
+        - application/json
+      description: Update a category
+      parameters:
+        - description: Team Request Body
+          in: body
+          name: UserRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.CategoryRequest'
+        - description: Update category by id
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+        - ApiKeyAuth: []
+      summary: Update a category
+      tags:
+        - CATEGORY
+  /api/categories/type:
+    get:
+      consumes:
+        - application/json
+      description: Return Team Count
+      parameters:
+        - in: body
+          name: TeamRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.GetCategoryTypeRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/response.CategoryResponse'
+      summary: Get category by type
+      tags:
+        - CATEGORY
+  /api/category/count:
+    post:
+      consumes:
+        - application/json
+      description: Return Category Count
+      parameters:
+        - in: body
+          name: CategoryRequest
+          required: true
+          schema:
+            $ref: '#/definitions/request.CountRequest'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CountResponse'
+      summary: Get Category Count
+      tags:
+        - CATEGORY
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: '2.0'

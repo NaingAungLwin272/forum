@@ -1,0 +1,99 @@
+<div class="qa">
+  <div nz-row nzJustify="end" nzAlign="middle">
+    <div nz-col>
+      <button nz-button nzType="primary" class="create-qa" (click)="openQaComponent()">
+        <span nz-icon nzType="plus-circle"></span>
+        {{'createqa'|translate}}
+      </button>
+    </div>
+  </div>
+  <nz-collapse>
+    <nz-collapse-panel [nzHeader]="'filterBy' | translate" [nzActive]="activeCollapse">
+      <form nz-form nzLayout="vertical" [formGroup]="searchForm">
+        <div nz-row nzJustify="start" nzAlign="middle" [nzGutter]="['8', '8']">
+          <div nz-col [nzXXl]="{span:6}" [nzXl]="{span:6}" [nzLg]="{span:6}" [nzMd]="{span:12}" [nzSm]="{span:12}"
+            [nzXs]="{span:12}">
+            <nz-form-item>
+              <nz-form-label>{{'language'|translate}}</nz-form-label>
+              <nz-form-control>
+                <nz-select [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple"
+                  [nzPlaceHolder]="'selectLanguage' | translate" formControlName="language_ids">
+                  <ng-container *ngFor="let item of categoryData">
+                    {{item.type}}
+                    <nz-option *ngIf="item.type === 1" [nzLabel]="item.name" [nzValue]="item._id"></nz-option>
+                  </ng-container>
+                </nz-select>
+                <ng-template #tagPlaceHolder let-selectedList>and {{
+                  selectedList.length }} more selected</ng-template>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzXXl]="{span:6}" [nzXl]="{span:6}" [nzLg]="{span:6}" [nzMd]="{span:12}" [nzSm]="{span:12}"
+            [nzXs]="{span:12}">
+            <nz-form-item>
+              <nz-form-label>{{'tag'|translate}}</nz-form-label>
+              <nz-form-control>
+                <nz-select [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple"
+                  [nzPlaceHolder]="'selectTag' | translate" formControlName="tag_ids">
+                  <ng-container *ngFor="let item of categoryData">
+                    <nz-option *ngIf="item.type === 2" [nzLabel]="item.name" [nzValue]="item._id"></nz-option>
+                  </ng-container>
+                </nz-select>
+                <ng-template #tagPlaceHolder let-selectedList>and {{
+                  selectedList.length }} more selected</ng-template>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzXXl]="{span:6}" [nzXl]="{span:6}" [nzLg]="{span:6}" [nzMd]="{span:12}" [nzSm]="{span:12}"
+            [nzXs]="{span:12}">
+            <nz-form-item>
+              <nz-form-label>{{'user'|translate}}</nz-form-label>
+              <nz-form-control>
+                <nz-select [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple"
+                  [nzPlaceHolder]="'selectUser'| translate" formControlName="user_id">
+                  <ng-container *ngFor="let item of userData">
+                    <nz-option [nzLabel]="item.display_name" [nzValue]="item._id"></nz-option>
+                  </ng-container>
+                </nz-select>
+                <ng-template #tagPlaceHolder let-selectedList>and {{
+                  selectedList.length }} more selected</ng-template>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzXXl]="{span:6}" [nzXl]="{span:6}" [nzLg]="{span:6}" [nzMd]="{span:12}" [nzSm]="{span:12}"
+            [nzXs]="{span:12}">
+            <nz-form-item>
+              <nz-form-label>{{'title'|translate}}</nz-form-label>
+              <nz-form-control>
+                <input nz-input formControlName="title" [placeholder]="'selectTitle'|translate" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col>
+            <nz-form-item>
+              <nz-form-control>
+                <button nz-button nzType="primary" (click)="filterQuestions(1, 10)">
+                  <span nz-icon nzType="search" nzTheme="outline"></span>
+                  {{'search'|translate}}
+                </button>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="clear-btn">
+            <nz-form-item>
+              <nz-form-control>
+                <button nz-button (click)="clearFilterForms()">{{'clear'|translate}}</button>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </form>
+    </nz-collapse-panel>
+  </nz-collapse>
+  <nz-card class="qa-list">
+    <app-question-table [data]="questionData" [categoryData]="categoryData" [isFiltered]="isFiltered"
+      [filteredFormData]="searchForm.value" [summaryCount]="questionCount" (categoryClicked)=categoryClicked($event)></app-question-table>
+  </nz-card>
+</div>

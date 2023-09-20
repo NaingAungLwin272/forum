@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/scm-dev1dev5/mtm-community-forum/user_rpc/pb";
+
+import "google/protobuf/timestamp.proto";
+
+service TeamService {
+  rpc CreateTeam(CreateTeamRequest) returns (TeamResponse) {}
+  rpc GetTeam(TeamRequest) returns (TeamResponse) {}
+  rpc GetTeams(GetTeamsRequest) returns (stream Team) {}
+  rpc UpdateTeam(TeamUpdateRequest) returns (TeamResponse) {}
+  rpc DeleteTeam(TeamRequest) returns (DeleteTeamResponse) {}
+  rpc GetTeamByDeparmentId(TeamRequestByDeparmentId) returns (stream Team) {}
+  rpc GetTeamCount(GetTeamsRequest) returns (TeamCountResponse) {}
+}
+
+message Team {
+  string _id = 1;
+  string name = 2;
+  string department_id = 3;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message TeamResponse {
+  string _id = 1;
+  string name = 2;
+  string department_id = 3;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+ }
+
+message CreateTeamRequest {
+  string name = 1;
+  string department_id = 2;
+}
+
+message TeamRequest { string _id = 1; }
+
+message TeamUpdateRequest {
+  string _id = 1;
+  optional string name = 2;
+  optional string department_id = 3;
+}
+
+message TeamRequestByDeparmentId { string department_id =  1;}
+
+message GetTeamsRequest {
+  optional int64 page = 1;
+  optional int64 limit = 2;
+}
+
+message DeleteTeamResponse { bool success = 1; }
+
+message TeamCountResponse { int64 count = 1; }

@@ -1,0 +1,101 @@
+<div class="department">
+  <form nz-form [formGroup]="csvForm">
+    <div *ngIf="csvForm.invalid" class="required">Need to fill require fields /
+      Check email format</div>
+    <button nz-button class="create-user-btn" (click)="cancelCreate()">Cancel</button>
+    <button nz-button nzType="primary" class="create-user-btn" [disabled]="csvForm.invalid"
+      (click)="createUserWithCsv()">Create</button>
+    <nz-table #editRowTable nzBordered [nzFrontPagination]="false" [nzData]="getUserControls()" nzTableLayout="fixed" [nzScroll]="{ x: '1100px' }">
+      <thead>
+        <tr>
+          <th><nz-form-label nzRequired [nzNoColon]="true">Staff ID</nz-form-label></th>
+          <th><nz-form-label nzRequired [nzNoColon]="true">Name</nz-form-label></th>
+          <th><nz-form-label nzRequired [nzNoColon]="true">Display Name</nz-form-label></th>
+          <th><nz-form-label nzRequired [nzNoColon]="true">Email</nz-form-label></th>
+          <th><nz-form-label nzRequired [nzNoColon]="true">Role</nz-form-label></th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th><nz-form-label nzRequired [nzNoColon]="true">Department</nz-form-label></th>
+          <th><nz-form-label nzRequired [nzNoColon]="true">Team</nz-form-label></th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody formArrayName="user">
+        <tr *ngFor="let data of getUserControls(); let i = index">
+          <ng-container *ngIf="data.get('edit')?.value; else editTemplate">
+            <td>{{data.get('staff_id')?.value}}</td>
+            <td>{{data.get('name')?.value}}</td>
+            <td>{{data.get('display_name')?.value}}</td>
+            <td>{{data.get('email')?.value}}</td>
+            <td>{{ data.get('role')?.value === 1 ? 'manager' : data.get('role')?.value
+              === 2 ? 'bse' : data.get('role')?.value === 3 ? 'leader' : data.get('role')?.value === 4 ? 'sub leader' :
+              data.get('role')?.value === 5 ? 'senior' : data.get('role')?.value === 6 ? 'junior': '' }}</td>
+            <td>{{data.get('phone')?.value}}</td>
+            <td>{{data.get('address')?.value}}</td>
+            <td>{{getDepartName(data.get('department_id')?.value)}}</td>
+            <td>{{getTeamName(data.get('team_id')?.value)}}</td>
+            <td>
+              <a (click)="startEdit(i)">Edit</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="confirmDelete(i)"
+                (nzOnCancel)="cancel()">Delete</a>
+            </td>
+          </ng-container>
+          <ng-template #editTemplate [formGroupName]="i">
+            <td><input type="text" nz-input formControlName="staff_id" /></td>
+            <td><input type="text" nz-input formControlName="name" /></td>
+            <td><input type="text" nz-input formControlName="display_name" /></td>
+            <td>
+              <input type="text" nz-input formControlName="email" (input)="onInput($event)" [nzAutocomplete]="auto" />
+              <nz-autocomplete #auto>
+                <nz-auto-option *ngFor="let option of options" [nzValue]="option">{{ option }}</nz-auto-option>
+              </nz-autocomplete>
+            </td>
+            <td>
+              <nz-form-control [nzSpan]="25">
+                <nz-select name="select-validate" formControlName="role" [ngModel]="data.get('role')?.value">
+                  <nz-option [nzValue]="1" nzLabel="manager"></nz-option>
+                  <nz-option [nzValue]="2" nzLabel="bse"></nz-option>
+                  <nz-option [nzValue]="3" nzLabel="leader"></nz-option>
+                  <nz-option [nzValue]="4" nzLabel="sub leader"></nz-option>
+                  <nz-option [nzValue]="5" nzLabel="senior"></nz-option>
+                  <nz-option [nzValue]="6" nzLabel="junior"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </td>
+            <td><input type="text" nz-input formControlName="phone" /></td>
+            <td>
+              <nz-form-control [nzSpan]="24">
+                <textarea nz-input rows="2" formControlName="address"></textarea>
+              </nz-form-control>
+            </td>
+            <td>
+              <nz-form-control [nzSpan]="24">
+                <nz-select class="tag-input" nzMode="default" nzPlaceHolder="Department" formControlName="department_id"
+                  (ngModelChange)="clearDepartment(i)">
+                  <nz-option *ngFor="let department of departmentData" [nzLabel]="department.name"
+                    [nzValue]="department._id"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </td>
+            <td>
+              <nz-form-control [nzSpan]="24">
+                <nz-select class="tag-input" nzMode="default" nzPlaceHolder="Team" formControlName="team_id">
+                  <ng-container *ngFor="let team of teamData">
+                    <nz-option *ngIf="csvForm.controls['user'].value[i].department_id === team.department_id"
+                      [nzLabel]="team.name" [nzValue]="team._id"></nz-option>
+                  </ng-container>
+                </nz-select>
+              </nz-form-control>
+            </td>
+            <td>
+              <a nz-button nzType="link" class="save" [disabled]="data.invalid" nz-popconfirm
+                nzPopconfirmTitle="Are you sure to update?" (nzOnConfirm)="updateUser(data)">Save</a>
+              <a (click)="cancelEdit(i)" nz-button nzType="link">Cancel</a>
+            </td>
+          </ng-template>
+        </tr>
+      </tbody>
+    </nz-table>
+  </form>
+</div>

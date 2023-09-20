@@ -1,0 +1,17 @@
+.dark-theme ::ng-deep .ck-content pre {
+    color: #ffffff;
+}
+
+.dark-theme ::ng-deep .ck-content pre code {
+    color: #ffffff;
+}
+
+.myce ::ng-deep .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+    border-color: var(--ck-color-base-border);
+    min-height: 500px;
+}
+
+::ng-deep .ck.ck-toolbar {
+    border: none !important;
+}
+

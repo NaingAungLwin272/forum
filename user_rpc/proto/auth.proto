@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/scm-dev1dev5/mtm-community-forum/user_rpc/pb";
+
+import "user.proto";
+
+message LoginRequest {
+    string email = 1;
+    string staff_id = 2;
+    string password = 3;
+    bool is_remember_me = 4;
+}
+
+message LoginResponse {
+    string access_token = 1;
+    UserResponse user = 2;
+}
+
+message VerifyTokenRequest {
+    string access_token = 1;
+}
+
+message VerifyTokenResponse {
+    bool is_token_verified = 2;
+}
+
+message RegisterRequest {
+    string name = 1;
+    string email = 2;
+    string staff_id = 3;
+    string password = 4;
+}
+
+message RegisterResponse {
+    bool is_success = 1;
+}
+
+message ForgetPasswordRequest {
+    string email = 1;
+    optional string origin = 2;
+}
+
+message ChangePasswordRequest{
+    string user_id=1;
+    string password=2;
+    string new_password=3;
+    string confrim_password=4;
+}
+
+message ForgetPasswordResponse {
+    string token = 1;
+    string name = 2;
+    string origin = 3;
+}
+
+message ResetPasswordRequest {
+    string email = 1;
+    string password = 2;
+    string token = 3;
+}
+
+
+message ResetPasswordResponse {
+    bool is_success = 1;
+}
+
+message ChangePasswordResponse {
+    bool is_success = 1;
+}
+
+service AuthService {
+    rpc Login(LoginRequest) returns (LoginResponse) {};
+    rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse) {};
+    rpc Register(RegisterRequest) returns (RegisterResponse) {};
+    rpc ForgetPassword(ForgetPasswordRequest) returns (ForgetPasswordResponse) {};
+    rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {};
+    rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse){};
+}

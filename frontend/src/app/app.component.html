@@ -1,0 +1,107 @@
+<div class="l-inner">
+  <nz-layout>
+    <nz-header *ngIf="isLogin">
+      <div class="app-header">
+        <div nz-row nzJustify="space-between" nzAlign="middle">
+          <div nz-col nzSpan="6">
+            <nz-space nzSize="small" class="header-trigger">
+              <div class="logo">
+                <a routerLink="/qa">
+                  <img src="../../../assets/images/logo.png" alt="logo">
+                </a>
+              </div>
+            </nz-space>
+          </div>
+          <div nz-col [nzXl]="{span:18}">
+            <div nz-row nzJustify="end" nzAlign="middle">
+              <nz-space>
+                <ul *nzSpaceItem nz-menu nzMode="horizontal" class="rocket">
+                  <li class="ques" nz-menu-item nzMatchRouter>
+                    <nz-space>
+                      <span *nzSpaceItem nz-icon nzType="rocket"></span>
+                      <a *nzSpaceItem routerLink="/qa" class="nav-item">{{'qa'|translate}}</a>
+                    </nz-space>
+                  </li>
+                  <li class="other" nz-submenu class="nav-item" [nzTitle]="'other' | translate" nzIcon="info-circle">
+                    <ul class="inner">
+                      <li nz-menu-item nzMatchRouter>
+                        <nz-space>
+                          <span *nzSpaceItem nz-icon nzType="fund-projection-screen" nzTheme="outline"></span>
+                          <a *nzSpaceItem href="http://150.95.82.104:8080/ems/showLogin"
+                            target="_blank">{{'ems'|translate}}</a>
+                        </nz-space>
+                      </li>
+
+                      <li nz-menu-item nzMatchRouter>
+                        <nz-space>
+                          <span *nzSpaceItem nz-icon nzType="heart" nzTheme="outline"></span>
+                          <a *nzSpaceItem href="https://group-chat-6fff3.web.app/voting-list"
+                            target="_blank">{{'vote'|translate}}</a>
+                        </nz-space>
+                      </li>
+
+                      <li nz-menu-item nzMatchRouter>
+                        <nz-space>
+                          <span *nzSpaceItem nz-icon nzType="comment" nzTheme="outline"></span>
+                          <a *nzSpaceItem href="https://cms-frontend-production.vercel.app/"
+                            target="_blank">{{'comment'|translate}}</a>
+                        </nz-space>
+                      </li>
+
+                      <li nz-menu-item nzMatchRouter>
+                        <nz-space>
+                          <span *nzSpaceItem nz-icon nzType="appstore" nzTheme="outline"></span>
+                          <a *nzSpaceItem href="https://dev-utility.vercel.app/"
+                            target="_blank">{{'utility'|translate}}</a>
+                        </nz-space>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+                <nz-switch class="nextLan" *nzSpaceItem [ngModel]="currentLanguage === 'en'" nzCheckedChildren="en"
+                  nzUnCheckedChildren="mm" (ngModelChange)="switchLanguage($event ? 'en' : 'mm')"></nz-switch>
+
+                <nz-switch class="nextTheme" *nzSpaceItem [(ngModel)]="currentTheme" nzCheckedChildren="light"
+                  nzUnCheckedChildren="dark" (ngModelChange)="changeTheme()"></nz-switch>
+                <nz-badge *nzSpaceItem [nzCount]="this.notiCount" [nzOverflowCount]="10" [nzShowZero]="false">
+                  <a nz-dropdown [nzDropdownMenu]="menu">
+                    <nz-avatar [nzSize]="'large'" nzIcon="user" class="avatar"
+                      [nzSrc]="userProfile ? userProfile : '../../../assets/images/avatar.png'"></nz-avatar>
+                  </a>
+                  <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu nzSelectable>
+                      <li nz-menu-item>
+                        <a nz-button nzType="link" [routerLink]="['/user', userId]" class="profile-hover">
+                          <span nz-icon nzType="user" nzTheme="outline"></span>
+                          {{'profile'|translate}}
+                        </a>
+                      </li>
+                      <li nz-menu-item>
+                        <a nz-button nzType="link" nzDanger routerLink="/signin" class="logout-hover">
+                          <span nz-icon nzType="logout" nzTheme="outline"></span>
+                          {{'logOut'|translate}}
+                        </a>
+                      </li>
+                    </ul>
+                  </nz-dropdown-menu>
+                </nz-badge>
+              </nz-space>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-header>
+    <nz-layout>
+      <nz-content>
+        <router-outlet></router-outlet>
+        <nz-back-top [nzTemplate]="tpl" [nzVisibilityHeight]="100">
+          <ng-template #tpl>
+            <div class="ant-back-top-inner">
+              <span nz-icon nzType="vertical-align-top" nzTheme="outline"></span>
+            </div>
+          </ng-template>
+        </nz-back-top>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</div>

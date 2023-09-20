@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/scm-dev1dev5/mtm-community-forum/features_rpc/pb";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+service CommentService {
+    rpc CreateComment(CreateCommentRequest) returns (CommentResponse) {}
+    rpc GetComments(GetCommentsRequest) returns (stream Comment) {}
+    rpc GetComment(CommentRequest) returns (CommentResponse) {}
+    rpc UpdateComment(UpdateCommentRequest) returns (CommentResponse) {}
+    rpc DeleteComment(CommentRequest) returns (DeleteCommentResponse) {}
+    rpc GetCommentByQuestionId(QuestionIdRequest) returns (stream Comment){}
+    rpc GetCommentsByUserId(CommentResquestByUserId) returns (stream Comment) {}
+    rpc GetAnswersByUserId(CommentResquestByUserId) returns (stream Comment) {}
+    rpc GetCommentsByUserIdWithSolved(CommentResquestByUserId) returns (stream Comment) {}
+    rpc GetCommentCount(CommentResquestByUserId) returns (CommentCountResponse) {}
+    rpc GetCommentCountBySolved(CommentResquestByUserId) returns (CommentCountResponse) {}
+    rpc GetCommentCountByQuestionIdSolved(QuestionIdRequest) returns (CommentCountResponse) {}
+}
+
+message Comment {
+    string _id = 1;
+    string user_id = 2;
+    string question_id = 3;
+    string parent_id=4;
+    uint64 sort = 5;
+    string description = 6;
+    uint64 vote_count = 7;
+    google.protobuf.BoolValue is_solution = 9;
+    google.protobuf.BoolValue is_deleted = 10;
+    google.protobuf.Timestamp created_at = 11;
+    google.protobuf.Timestamp updated_at = 12;
+}
+
+message CommentResponse {
+    string _id = 1;
+    string user_id = 2;
+    string question_id = 3;
+    string parent_id=4;
+    uint64 sort = 5;
+    string description = 6;
+    uint64 vote_count = 7;
+    google.protobuf.BoolValue is_solution = 8;
+    google.protobuf.BoolValue is_deleted = 9;
+    google.protobuf.Timestamp created_at = 10;
+    google.protobuf.Timestamp updated_at = 11;
+}
+
+message GetCommentsRequest {
+    optional int64 page = 1;
+    optional int64 limit = 2;
+}
+
+message CreateCommentRequest {
+    string user_id = 1;
+    string question_id = 2;
+    string parent_id=3;
+    uint64 sort = 4;
+    string description = 5;
+    uint64 vote_count = 6;
+    bool is_solution = 7;
+    bool is_deleted = 8;
+}
+
+message UpdateCommentRequest {
+    string _id = 1;
+    optional uint64 sort = 2;
+    optional string description = 3;
+    optional uint64 vote_count = 4;
+    optional bool is_solution = 5;
+    optional bool is_deleted = 6;
+}
+
+message CommentRequest {
+    string _id = 1;
+}
+
+message DeleteCommentResponse {
+    bool success = 1;
+}
+message QuestionIdRequest{
+    string question_id=1;
+}
+
+message CommentResquestByUserId { 
+    string user_id = 1;
+    optional int64 page = 2;
+    optional int64 limit = 3;
+}
+
+message CommentCountResponse { int64 count = 1; }

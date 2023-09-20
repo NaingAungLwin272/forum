@@ -1,0 +1,10 @@
+<form nz-form [formGroup]="commentForm">
+  <nz-form-item>
+    <app-cke-editor [userData]="userModalData.user" [showToolbar]="showToolbar" class="cke-width"></app-cke-editor>
+  </nz-form-item>
+</form>
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="cancel()">{{'cancel' | translate}}</button>
+  <button nz-button [disabled]="!commentForm.valid" [nzLoading]="isLoading" nzType="primary" (click)="submit()">{{'ok' |
+    translate}}</button>
+</div>

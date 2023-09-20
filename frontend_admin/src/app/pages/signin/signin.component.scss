@@ -1,0 +1,33 @@
+.signin-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-height: 70vh;
+  margin-top: 145px;
+
+  @media screen and (max-width: "575px") {
+    margin-top: 65px;
+  }
+
+  .signin-card {
+    width: 400px;
+
+    @media screen and (max-width: "575px") {
+      width: 100%;
+    }
+
+    .ant-form-item-explain-error {
+      font-size: 13px;
+    }
+  }
+
+  .password-reminder {
+    width: 400px;
+    text-align: right;
+    margin-top: 15px;
+
+    @media screen and (max-width: "575px") {
+      width: 100%;
+    }
+  }
+}

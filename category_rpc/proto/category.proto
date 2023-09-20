@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/scm-dev1dev5/mtm-community-forum/category_rpc/pb";
+
+import "google/protobuf/timestamp.proto";
+
+service CategoryService {
+  rpc CreateCategory(CreateCategoryRequest) returns (CategoryResponse) {}
+  rpc GetCategory(CategoryRequest) returns (CategoryResponse) {}
+  rpc GetCategories(GetCategoriesRequest) returns (CategoryResponseList) {}
+  rpc UpdateCategory(UpdateCategoryRequest) returns (CategoryResponse) {}
+  rpc DeleteCategory(CategoryRequest) returns (DeleteCategoryResponse) {}
+  rpc GetCategoryByType(GetCategoryByTypeRequest) returns (CategoryResponseList);
+  rpc GetCategoryCount(GetCategoriesRequest) returns (CategoryCountResponse) {}
+}
+
+message CategoryResponseList {
+  repeated Category categories = 1;
+}
+
+message Category {
+  string _id = 1;
+  int32 type = 2;
+  string name = 3;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message CategoryResponse {
+  string _id = 1;
+  int32 type = 2;
+  string name = 3;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message CreateCategoryRequest {
+  int32 type = 1;
+  string name = 2;
+}
+
+message CategoryRequest { string id = 1; }
+
+message UpdateCategoryRequest {
+  string _id = 1;
+  optional int32 type = 2;
+  optional string name = 3;
+}
+
+message GetCategoriesRequest {
+  optional int64 page = 1;
+  optional int64 limit = 2;
+}
+
+message GetCategoryByTypeRequest {
+  int32 type = 1;
+  optional int64 page = 2;
+  optional int64 limit = 3;
+}
+
+message DeleteCategoryResponse { bool success = 1; }
+
+message CategoryCountResponse {
+  int64 language_count = 1;
+  int64 tag_count=2;
+}

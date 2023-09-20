@@ -1,0 +1,335 @@
+<div class="qa-detail">
+  <nz-card class="qa-block" *ngIf="questionDetail">
+    <div>
+      <h3 nz-typography>{{questionDetail.title}}</h3>
+      <nz-tag [nzColor]="'cyan'" *ngFor="let language of questionDetail.language_ids">
+        <span class="taglan">{{ getCategoryName(language) }}</span>
+      </nz-tag>
+      <br><br>
+      <nz-tag [nzColor]="'lime'" *ngFor="let tag of questionDetail.tag_ids">
+        <span class="taglan">{{ getCategoryName(tag) }}</span>
+      </nz-tag>
+    </div>
+    <div class="ava-group-container">
+      <nz-avatar-group class="topava">
+        <ng-container *ngFor="let userId of uniqueUserIds; let i = index;">
+          <a [href]="'/user/' + userId" [ngClass]="darkTheme ? 'lightOne' : 'darkOne'">
+            <nz-avatar *ngIf="i < 10" [nzSrc]="getUserImageLink(userId)" nz-tooltip
+              [nzTooltipTitle]="getUserName(userId)" class="profile"></nz-avatar>
+          </a>
+          <nz-avatar *ngIf="i === 10 && uniqueUserIds.size > 10" [nzText]="'+'+(uniqueUserIds.size - 10).toString()"
+            class="profile remaining-avatar">
+          </nz-avatar>
+        </ng-container>
+      </nz-avatar-group>
+    </div>
+
+    <nz-divider></nz-divider>
+    <div nz-row nzJustify="start" nzAlign="top" [nzGutter]="['16', '16']">
+      <div nz-col [nzXXl]="{span:21}" [nzXl]="{span:21}" [nzLg]="{span:20}" [nzMd]="{span:20}" [nzSm]="{span:24}"
+        [nzXs]="{span:24}">
+        <ng-container *ngFor="let comment of commentList">
+          <!-- top comment title block -->
+          <div nz-row nzJustify="start" nzAlign="top" [nzGutter]="['16', '16']" [id]="comment._id">
+            <div nz-col [nzXXl]="{span:1}" [nzXl]="{span:1,offset:0}" [nzLg]="{ span:1}" [nzMd]="{span:1,offset:2}"
+              [nzSm]="{span:2,offset:2}" [nzXs]="{span:2}">
+              <nz-avatar [nzShape]="'square'" [nzSize]="64" [nzSrc]="getUserImageLink(comment.user_id)"
+                nzTheme="outline" (click)="previewImg(getUserImageLink(comment.user_id))" class="profile"></nz-avatar>
+            </div>
+            <div nz-col [nzXXl]="{span:5}" [nzXl]="{span:4,offset:1}" [nzLg]="{span:3,offset:1}"
+              [nzXs]="{ span: 4, offset: 1 }" [nzLg]="{ span:6,offset: 2 }" [nzMd]="{span:7,offset:2}"
+              [nzSm]="{span:8,offset:2}" [nzXs]="{span:17,offset:5}">
+              <h3 nz-typography [id]="'qa' + comment._id">
+                <a href="/user/{{ comment.user_id }}" [ngClass]="darkTheme ? 'lightOne' : 'darkOne'">
+                  {{ getUserName(comment.user_id) }}
+                </a>
+              </h3>
+              <span nz-typography nzType="secondary">
+                <span class="common-create"> {{'createdAt'|translate}}: {{ comment.created_at.seconds * 1000 +
+                  comment.created_at.nanos / 1000000 |
+                  date: "yyyy/M/d"
+                  }}
+                </span>
+              </span>
+            </div>
+            <div class="reaction" nz-col [nzXXl]="{span:7}" [nzXl]="{span:8,offset:10}" [nzLg]="{span:6,offset:7}"
+              [nzMd]="{span:6,offset:6}" [nzSm]="{span:7,offset:3}" [nzXs]="{span:24}" class="edit">
+              <a class="common-a" *ngIf="comment.user_id === userId" nz-button nzType="link"
+                (click)="updateComment(comment)" [nz-tooltip]="comment.is_solution.value ?('cantEdit' | translate) : ''"
+                [disabled]=" comment.is_solution.value">
+                <span class="common-a" nz-icon nzType="edit" nzTheme="outline"></span>
+                <span class="common-a">{{'edit'|translate}}</span>
+              </a>
+              <a class="common-a" nz-button nzType="link" nz-popconfirm
+                nzPopconfirmTitle="{{'deleteBookMark'|translate}}" [nzCondition]="!comment.isBookmark"
+                (nzOnConfirm)="bookmark(comment)" (nzOnCancel)="cancel()" nzOkText="{{'ok'|translate}}"
+                nzCancelText="{{'cancel'|translate}}">
+                <span class=" common-a" nz-icon nzType="star"
+                  [nzTheme]="comment.isBookmark ? 'fill' : 'outline'"></span>
+                <span class="common-a">{{'bookm'|translate}}</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- top comment desc block -->
+          <div nz-row nzJustify="start" nzAlign="middle" [nzGutter]="['16', '16']">
+            <div nz-col [nzXXl]="{span:22,offset:2}" [nzXl]="{span:22,offset:2}" [nzLg]="{span:22,offset:2}"
+              [nzMd]="{span:22,offset:2}" [nzSm]="{span:22,offset:2}" [nzXs]="{span:24}">
+              <ckeditor [ngModel]="comment.description" [ngClass]="darkTheme ? 'dark-theme' : 'light-theme'"
+                [disabled]="true" [editor]="editor" [config]="editorConfig" class="ck-width">
+              </ckeditor>
+            </div>
+            <div nz-col [nzXXl]="{span:22}" [nzXl]="{span:22,offset:2}" [nzLg]="{span:22,offset:2}"
+              [nzMd]="{span:22,offset:2}" [nzSm]="{span:22,offset:2}" [nzXs]="{span:24}">
+              <div class="reaction">
+                <ng-template #solutionTmp>
+                  <div *ngIf="comment.solutionLinks && comment.solutionLinks.length > 0">
+                    <div *ngFor="let solutionLink of comment.solutionLinks;let i = index">
+                      <a class="soluLink" (click)="openCollapseAndNavigate(comment._id,solutionLink)">
+                        <span>Solution {{i+1}}</span>
+                      </a>
+
+                    </div>
+                  </div>
+                </ng-template>
+                <span *ngIf="comment.solutionCount !== undefined" nz-button
+                  [nzTooltipTitle]="comment.solutionLinks && comment.solutionLinks.length>0?solutionTmp:'no solution yet'"
+                  nz-tooltip nzTooltipPlacement="top" class="solutionCount">
+                  <ng-container *ngIf="comment.solutionCount === 1">There is <span
+                      class="orange">{{comment.solutionCount}} solution</span></ng-container>
+                  <ng-container *ngIf="comment.solutionCount > 1">
+                    There are <span class="orange">{{ comment.solutionCount }} solutions</span>
+                  </ng-container>
+                </span>
+                <a class="common-a" nz-button nzType="link" nz-popconfirm nzPopconfirmTitle="{{'deleteVote'|translate}}"
+                  [nzCondition]="!comment.isVote" (nzOnConfirm)="vote(comment)" (nzOnCancel)="cancel()"
+                  nzOkText="{{'ok'|translate}}" nzCancelText="{{'cancel'|translate}}"
+                  [disabled]="comment.user_id === userId"
+                  [nz-tooltip]="comment.user_id === userId ?('cantVote' | translate) : ''">
+                  <span class="common-a" nz-icon [nzType]="'heart'"
+                    [nzTheme]="comment.isVote ? 'fill' : 'outline'"></span>
+                  <span class="common-a">{{ comment.vote_count || 0 }}</span>
+                </a>
+                <a class="common-a" nz-button nzType="link" (click)="shareComment(comment)">
+                  <span class="common-a" nz-icon nzType="link" nzTheme="outline"></span>
+                  <span class="common-a">{{'share'|translate}}</span>
+                </a>
+                <a class="common-a" nz-button nzType="link" nz-popconfirm
+                  nzPopconfirmTitle="{{'solutionRemove'|translate}}" [nzCondition]="!comment.is_solution.value"
+                  (nzOnConfirm)="solution(comment)" (nzOnCancel)="cancel()"
+                  *ngIf="questionDetail.user_id === userId; else noOwner" nzOkText="{{'ok'|translate}}"
+                  nzCancelText="{{'cancel'|translate}}">
+                  <span class="common-a" nz-icon nzType="check-square"
+                    [nzTheme]="comment.is_solution.value ? 'fill' : 'outline'"></span>
+                  <span class="common-a">{{ comment.is_solution.value ? ('solution'|translate) :
+                    ('notSolution'|translate) }}</span>
+                </a>
+                <ng-template #noOwner>
+                  <a nz-button nzType="link" *ngIf="comment.is_solution.value" class="no-pointer">
+                    <span nz-icon nzType="check-square"
+                      [nzTheme]="comment.is_solution.value ? 'fill' : 'outline'"></span>
+                    {{ comment.is_solution.value ? ('solution'|translate) : ('notSolution'|translate) }}
+                  </a>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+
+          <!-- sub comment -->
+          <nz-collapse class="collapse-comment" *ngIf="comment.reply_comments" [nzAccordion]="true">
+            <nz-collapse-panel [nzExtra]="extraTpl" [nzActive]="isPanelActive(comment._id)" class="collapsePanel"
+              (nzActiveChange)="activeChange($event,comment._id)">
+              <ng-template #extraTpl>
+                <p class="solutionVoteText" *ngIf="comment.replyCount !== undefined">
+                  <ng-container *ngIf="comment.replyCount === 0"><span class="orange">No reply</span></ng-container>
+                  <ng-container *ngIf="comment.replyCount === 1">There is <span class="orange">{{comment.replyCount}}
+                      reply</span></ng-container>
+                  <ng-container *ngIf="comment.replyCount > 1">
+                    There are <span class="orange">{{ comment.replyCount }} replies</span>
+                  </ng-container>
+                  <span *ngIf="comment.voteCount !== undefined">
+                    <ng-container *ngIf="comment.voteCount===0">&nbsp; and <span class="orange">no vote</span>
+                      yet.</ng-container>
+                    <ng-container *ngIf="comment.voteCount===1"> and <span class="orange">{{comment.voteCount}}
+                        vote</span> for all comments under
+                      this.</ng-container>
+
+                    <ng-container *ngIf="comment.voteCount>1"> and <span class="orange">{{comment.voteCount}}
+                        votes</span> for all comments under
+                      this.</ng-container>
+
+                    <!-- {{comment.solutionCount}} -->
+                  </span>
+                </p>
+
+                <nz-avatar-group class="ava-gp">
+                  <ng-container *ngFor="let userId of commentUserIds.get(comment._id); let i = index; let last = last">
+                    <a [href]="'/user/' + userId" [ngClass]="darkTheme ? 'lightOne' : 'darkOne'">
+                      <nz-avatar *ngIf="i < 5" [nzSrc]="getUserImageLink(userId)" nzTheme="outline" nz-tooltip
+                        [nzTooltipTitle]="getUserName(userId)" (click)="$event.stopPropagation();"
+                        class="profile"></nz-avatar>
+                    </a>
+                    <nz-avatar *ngIf="i === 5 && commentUserIds.get(comment._id)!.size > 5" nzTheme="outline"
+                      [nzText]="'+'+(commentUserIds.get(comment._id)!.size - 5).toString()"
+                      class="profile remaining-avatar">
+                    </nz-avatar>
+                  </ng-container>
+                </nz-avatar-group>
+              </ng-template>
+              <ng-container *ngFor="let reply_comment of comment.reply_comments;let first = first">
+                <div nz-row nzJustify="start" nzAlign="top" [nzGutter]="['16', '16']" [id]="reply_comment._id">
+                  <div nz-col [nzXXl]="{span:21,offset:3}" [nzXl]="{span:23,offset:1}" [nzLg]="{span:21,offset:3}"
+                    [nzMd]="{span:21,offset:3}" [nzSm]="{span:21,offset:1}" [nzXs]="{span:22,offset:2}">
+                    <nz-divider *ngIf="!first"></nz-divider>
+                  </div>
+                  <div nz-col [nzXXl]="{span:1}" [nzXl]="{span:1,offset:1}" [nzLg]="{ span:1}"
+                    [nzMd]="{span:1,offset:2}" [nzSm]="{span:2,offset:2}" [nzXs]="{span:2}">
+                    <nz-avatar [nzShape]="'square'" [nzSize]="64" [nzSrc]="getUserImageLink(reply_comment.user_id)"
+                      nzTheme="outline" (click)="previewImg(getUserImageLink(reply_comment.user_id))"
+                      class="profile"></nz-avatar>
+                  </div>
+                  <div nz-col [nzXXl]="{span:3,offset:3}" [nzXl]="{span:5,offset:1}" [nzLg]="{span:8,offset:3}"
+                    [nzMd]="{span:9,offset:3}" [nzSm]="{span:10,offset:3}" [nzXs]="{span:12,offset:2}">
+                    <h5 nz-typography [id]="'qa' + reply_comment._id" class="hhead">
+                      <a href="/user/{{ reply_comment.user_id }}" [ngClass]="darkTheme ? 'lightOne' : 'darkOne'">
+                        {{ getUserName(reply_comment.user_id) }}
+                      </a>
+                    </h5>
+                    <span nz-typography nzType="secondary">
+                      <span class="common-create"> {{'createdAt'|translate}}: {{ reply_comment.created_at.seconds * 1000
+                        +
+                        reply_comment.created_at.nanos
+                        / 1000000 |
+                        date:
+                        "yyyy/M/d"
+                        }}
+                      </span>
+                    </span>
+                  </div>
+                  <div class="reaction" nz-col [nzXXl]="{span:7}" [nzXl]="{span:5,offset:11}" [nzLg]="{span:6,offset:7}"
+                    [nzMd]="{span:4,offset:8}" [nzSm]="{span:6,offset:7}" [nzXs]="{span:6,offset:4}" class="edit">
+                    <a *ngIf="reply_comment.user_id === userId" nz-button nzType="link"
+                      [nz-tooltip]="reply_comment.is_solution.value ? ('cantEdit' | translate) : ''"
+                      (click)="updateComment(reply_comment)" [disabled]="reply_comment.is_solution.value">
+                      <span nz-icon nzType="edit" nzTheme="outline"></span>
+                      <span class="common-a">{{'edit'|translate}}</span>
+                    </a>
+                    <a nz-button nzType="link" nz-popconfirm nzPopconfirmTitle="{{'deleteBookMark'|translate}}"
+                      [nzCondition]="!reply_comment.isBookmark" (nzOnConfirm)="bookmark(reply_comment)"
+                      (nzOnCancel)="cancel()" nzOkText="{{'ok'|translate}}" nzCancelText="{{'cancel'|translate}}">
+                      <span nz-icon nzType="star" [nzTheme]="reply_comment.isBookmark ? 'fill' : 'outline'"></span>
+                      <span class="common-a">{{'bookmark'|translate}}</span>
+                    </a>
+                  </div>
+                  <div nz-col [nzXXl]="{span:21}" [nzXl]="{span:21,offset:3}" [nzLg]="{span:21,offset:3}"
+                    [nzMd]="{span:21,offset:3}" [nzSm]="{span:21,offset:3}" [nzXs]="{span:23,offset:1}">
+                    <ckeditor [ngModel]="reply_comment.description" [ngClass]="darkTheme ? 'dark-theme' : 'light-theme'"
+                      [disabled]="true" [editor]="editor" [config]="editorConfig" class="ck-width"></ckeditor>
+                  </div>
+                  <div nz-col [nzXXl]="{span:21}" [nzXl]="{span:21,offset:3}" [nzLg]="{span:21,offset:3}"
+                    [nzMd]="{span:21,offset:3}" [nzSm]="{span:21,offset:3}" [nzXs]="{span:23,offset:1}">
+                    <div class="reaction">
+                      <a nz-button nzType="link" nz-popconfirm nzPopconfirmTitle="{{'deleteVote'|translate}}"
+                        [nzCondition]="!reply_comment.isVote" (nzOnConfirm)="vote(reply_comment)"
+                        (nzOnCancel)="cancel()" [disabled]="reply_comment.user_id === userId || isClicked"
+                        nzOkText="{{'ok'|translate}}" nzCancelText="{{'cancel'|translate}}"
+                        [nz-tooltip]="reply_comment.user_id === userId ?('cantVote' | translate) : ''">
+                        <span nz-icon [nzType]="'heart'" [nzTheme]="reply_comment.isVote ? 'fill' : 'outline'"></span>
+                        <span class="common-a">{{ reply_comment.vote_count || 0 }}</span>
+                      </a>
+                      <a nz-button nzType="link" (click)="shareComment(reply_comment)">
+                        <span nz-icon nzType="link" nzTheme="outline"></span>
+                        <span class="common-a">{{'share'|translate}}</span>
+                      </a>
+                      <a nz-button nzType="link" nz-popconfirm nzPopconfirmTitle="{{'solutionRemove'|translate}}"
+                        [nzCondition]="!reply_comment.is_solution.value" (nzOnConfirm)="solution(reply_comment)"
+                        (nzOnCancel)="cancel()" *ngIf="questionDetail.user_id === userId; else noOwner">
+                        <span nz-icon nzType="check-square"
+                          [nzTheme]="reply_comment.is_solution.value ? 'fill' : 'outline'"></span>
+                        <span class="common-a">{{ reply_comment.is_solution.value ? ('solution'|translate) :
+                          ('notSolution'|translate) }}</span>
+                      </a>
+                      <ng-template #noOwner>
+                        <a nz-button nzType="link" *ngIf="reply_comment.is_solution.value" class="no-pointer">
+                          <span nz-icon nzType="check-square"
+                            [nzTheme]="reply_comment.is_solution.value ? 'fill' : 'outline'"></span>
+                          {{ reply_comment.is_solution.value ?('solution'|translate) :
+                          ('notSolution'|translate) }}
+                        </a>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </nz-collapse-panel>
+          </nz-collapse>
+
+          <!-- sub add comment block -->
+          <div nz-row nzJustify="center" nzAlign="middle" [nzGutter]="['16', '16']">
+            <div nz-col [nzXXl]="{span:2,offset:1}" [nzXl]="{span:2,offset:1}" [nzLg]="{span:2,offset:1}"
+              [nzMd]="{span:2,offset:1}" [nzSm]="{span:2,offset:2}" [nzXs]="{span:2,offset:0}">
+              <button nz-button nzType="primary" (click)="createComment(comment)">
+                <span class="addCom" nz-icon nzType="plus" nzTheme="outline"></span>
+                <span class="addCom">{{'addComment'|translate}}</span>
+              </button>
+            </div>
+          </div>
+          <div nz-col [nzXXl]="{span:22,offset:2}" [nzXl]="{span:24,offset:0}" [nzLg]="{span:21,offset:3}"
+            [nzMd]="{span:21,offset:3}" [nzSm]="{span:21,offset:3}" [nzXs]="{span:22,offset:2}">
+            <nz-divider></nz-divider>
+          </div>
+        </ng-container>
+
+        <!-- all action block -->
+        <div nz-row nzJustify="start" nzAlign="middle" [nzGutter]="['16', '16']">
+          <div nz-col [nzXl]="{span:21,offset:3}" [nzXl]="{span:22,offset:2}" [nzLg]="{span:22,offset:2}"
+            [nzMd]="{span:22,offset:2}" [nzXs]="{span:24}">
+            <div class="reaction">
+              <a nz-button nzType="link" class="no-pointer">
+                <span class="common-a" nz-icon nzType="comment" nzTheme="outline"></span>
+                <span class="common-a">{{ questionDetail.reply_count || 0 }}</span>
+              </a>
+              <a nz-button nzType="link" class="no-pointer">
+                <span class="common-a" nz-icon nzType="eye" nzTheme="outline"></span>
+                <span class="common-a">{{ questionDetail.view_count || 0 }}</span>
+              </a>
+              <a nz-button nzType="link" class="no-pointer">
+                <span class="common-a" nz-icon [nzType]="'heart'"
+                  [nzTheme]="questionDetail.vote_count>0?'fill':'outline'"></span>
+                <span class="common-a">{{ questionDetail.vote_count || 0 }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- add answer block -->
+        <div nz-row nzJustify="center" nzAlign="middle" [nzGutter]="['16', '16']">
+          <div nz-col [nzXXl]="{span:2,offset:1}" [nzXl]="{span:2,offset:1}" [nzLg]="{span:2,offset:0}"
+            [nzMd]="{span:2,offset:1}" [nzSm]="{span:2,offset:2}" [nzXs]="{span:2,offset:0}">
+            <button nz-button nzType="primary" (click)="createAnswer()">
+              <span class="addCom" nz-icon nzType="plus" nzTheme="outline"></span>
+              <span class="addCom">{{'addAnswer'|translate}}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- anchor block -->
+      <div nz-col [nzXXl]="{span:3}" [nzXl]="{span:3}" [nzLg]="{span:4}" [nzMd]="{span:4}" [nzSm]="{span:4}"
+        [nzXs]="{span:24}" class="anchor">
+        <nz-anchor (nzClick)="handleAnchorClick($event)">
+          <ng-container *ngFor="let comment of commentList">
+            <nz-link [nzHref]="'#qa' + comment._id" [nzTitle]="nzTitle"></nz-link>
+            <ng-template #nzTitle>
+              <span class="common-anchor">{{ comment.created_at.seconds * 1000 + comment.created_at.nanos / 1000000 |
+                date:
+                "yyyy/M/d HH:mm"
+                }}
+              </span>
+            </ng-template>
+          </ng-container>
+        </nz-anchor>
+      </div>
+    </div>
+  </nz-card>
+</div>

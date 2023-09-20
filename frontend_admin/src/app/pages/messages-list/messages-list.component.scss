@@ -1,0 +1,50 @@
+.container {
+  width: 40%;
+  display: block;
+  margin: 20px auto;
+  background-color: #ffffff;
+  padding: 20px 2px;
+
+  .form {
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 10px;
+
+    input,
+    textarea {
+      width: 100%;
+    }
+  }
+
+  .clear-btn {
+    margin-right: 5px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+    display: block;
+    margin: 10px auto;
+    background-color: #ffffff;
+
+    .form {
+      width: 75vw;
+      margin-top: 10px;
+
+      input {
+        width: 95%;
+      }
+    }
+  }
+
+  .clear-btn {
+    width: 100vw;
+    max-width: 100%;
+    margin-top: 10px;
+  }
+}
+
+::ng-deep .ant-radio-button-wrapper {
+  padding: 0 10px;
+}

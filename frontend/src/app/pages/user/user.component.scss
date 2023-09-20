@@ -1,0 +1,540 @@
+.user {
+  width: calc(100vw - 100px);
+  max-width: 1600px;
+
+  .user-summary {
+    display: block;
+
+    .profile {
+      cursor: pointer;
+    }
+  }
+
+  .created-atdo {
+    margin-top: 2%;
+    font-size: 14px;
+  }
+
+  .save-btn {
+    margin-left: 173px;
+  }
+
+
+  ::ng-deep .ant-list-empty-text {
+    margin-top: 250px;
+  }
+
+  ::ng-deep .ant-col-md-offset-3 {
+    margin-left: 50px;
+  }
+
+  ::ng-deep .ant-card-meta-description {
+    font-size: 15px !important;
+  }
+
+  .user-info {
+    margin-top: 25px;
+
+    .user-tabset {
+      min-height: 88vh;
+    }
+
+    .summary-block {
+      padding: 95px;
+
+      .summary-grid {
+        width: 50%;
+        line-height: 2;
+      }
+
+      .spin {
+        display: inline-block;
+      }
+    }
+
+    .question-block,
+    .bookark-block {
+      .tag {
+        margin: 0 5px 5px 0;
+      }
+    }
+
+    .badge-block {
+      .card-grid {
+        width: 20%;
+        text-align: center;
+
+        .badge-img {
+          display: block;
+          width: 120px;
+          height: 120px;
+          margin: 0 auto;
+        }
+      }
+    }
+
+    .notification-block {
+      display: block;
+      width: 50%;
+    }
+
+    .edit-block {
+      display: flex;
+      flex-direction: column;
+
+      .photo {
+        margin-bottom: 20px;
+        margin-left: 175px;
+      }
+
+      .edit-form {
+        width: 100%;
+        max-width: 700px;
+      }
+    }
+  }
+
+  .full-size-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .font-justi {
+    font-size: 14px;
+  }
+
+  .cardo {
+    position: relative;
+  }
+
+  .cardo {
+    .icon {
+      position: absolute;
+      left: -12%;
+      // top: 7%;
+      font-size: 18px;
+
+      .icoo {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .notiTag {
+    position: relative;
+  }
+
+  .badgeNoti {
+    position: absolute;
+    top: -5px;
+    left: 68%;
+    width: 25%;
+  }
+
+  ::ng-deep .ant-card-small>.ant-card-head>.ant-card-head-wrapper>.ant-card-head-title {
+    position: absolute;
+    left: 1%;
+    top: -0.8%;
+    margin-right: 4px;
+  }
+
+  ::ng-deep .mm,
+  ::ng-deep .tt {
+    color: #fa541c;
+
+  }
+
+  .no-data {
+    margin-bottom: -50px;
+    margin-top: 24%;
+  }
+
+  ::ng-deep .ant-empty {
+    color: #757575
+  }
+
+  ::ng-deep .ant-empty-image {
+    height: auto;
+    margin-bottom: 8px;
+  }
+
+  ::ng-deep .ant-badge-count {
+    background-color: #fa541c !important;
+  }
+
+  .cp {
+    margin-left: 25%;
+    margin-top: -25px;
+  }
+
+  .truncate-text {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #a09a9a;
+    font-size: 14px;
+  }
+
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 1180px) {
+  .user {
+    .summary-grid {
+      width: 40%;
+    }
+
+    ::ng-deep .profile-font {
+      font-size: 2.5vw;
+    }
+
+    .user-info {
+      margin-top: 25px;
+
+      .user-tabset {
+        min-height: 88vh;
+      }
+
+      .summary-block {
+        padding: 95px;
+
+        .summary-grid {
+          width: 50%;
+        }
+      }
+
+      .question-block,
+      .bookark-block {
+        .tag {
+          margin: 0 5px 5px 0;
+        }
+      }
+
+      .badge-block {
+        .card-grid {
+          width: 20%;
+          text-align: center;
+
+          .badge-img {
+            display: block;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+          }
+        }
+      }
+
+      .notification-block {
+        display: block;
+        width: 50%;
+      }
+
+      .user-info {
+        margin-top: 25px;
+
+        .user-tabset {
+          min-height: 88vh;
+        }
+
+        .summary-block {
+          padding: 95px;
+
+          .summary-grid {
+            width: 50%;
+          }
+        }
+
+        .question-block,
+        .bookark-block {
+          .tag {
+            margin: 0 5px 5px 0;
+          }
+        }
+
+        .badge-block {
+          .card-grid {
+            width: 20%;
+            text-align: center;
+
+            .badge-img {
+              display: block;
+              width: 120px;
+              height: 120px;
+              margin: 0 auto;
+            }
+          }
+        }
+
+        .notification-block {
+          display: block;
+          width: 50%;
+        }
+
+        .edit-block {
+          display: flex;
+          flex-direction: column;
+
+          .photo {
+            margin-bottom: 20px;
+            margin-left: 175px;
+          }
+
+          .edit-form {
+            width: 100%;
+            max-width: 700px;
+          }
+        }
+      }
+    }
+
+    .font-justi {
+      font-size: 2vw;
+    }
+
+    ::ng-deep .ant-typography strong {
+      font-size: 2vw;
+    }
+
+    ::ng-deep .ant-col-md-10 {
+      margin-bottom: 1.5vw;
+    }
+
+    ::ng-deep .ant-tabs-tab {
+      font-size: 2.5vw;
+    }
+
+    .summary-block {
+      padding: 0 !important;
+    }
+
+    .badge-block {
+      .card-grid {
+        display: block;
+        width: 50% !important;
+        text-align: center;
+
+        .badge-img {
+          display: block;
+          width: 18.75vw !important;
+          height: 18.75vw !important;
+          margin: 0 auto;
+        }
+      }
+    }
+
+    ::ng-deep .ant-list-vertical .ant-list-item-meta-title {
+      font-size: 2.5vw;
+    }
+
+    ::ng-deep .ant-skeleton {
+      display: block;
+      width: 100%;
+    }
+
+    ::ng-deep .ant-card-body {
+      padding: 2vw !important;
+    }
+
+    ::ng-deep .ant-upload-picture-card-wrapper {
+      margin-left: -8vw;
+    }
+
+    .cardo {
+      width: 50vw;
+    }
+
+    ::ng-deep .ant-ribbon.ant-ribbon-placement-end {
+      right: -21vw;
+      font-size: 2vw;
+    }
+
+    .save-btn {
+      margin-left: 15vw;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .user {
+    width: calc(100vw - 2px);
+
+    ::ng-deep .ant-badge-count {
+      font-size: 3vw;
+    }
+
+    .edit-block {
+      display: flex;
+      flex-direction: column;
+
+      .photo {
+        margin-bottom: 3.125vw;
+        margin-left: 22vw !important;
+      }
+
+
+    }
+
+    .badgeNoti {
+      position: absolute;
+      top: -3.8vw;
+      left: 70%;
+      width: 20%;
+      height: 10%;
+      font-size: 3vw;
+    }
+
+    .cp {
+      margin-left: 2%;
+    }
+
+    .truncate-text {
+      font-size: 3.188vw;
+    }
+
+    .created-atdo {
+      font-size: 3.188vw;
+    }
+
+    .user-summary {
+      margin-top: 17vw;
+    }
+
+    .ant-col-md-offset-3 {
+      margin-left: 0.2vw;
+    }
+
+    .title {
+      display: inline;
+    }
+
+    .card {
+      width: 63.5vw;
+
+    }
+
+    .profile-font {
+      font-size: 4vw;
+    }
+
+    .summary-block {
+      padding: 0px !important;
+
+      .summary-grid {
+        display: block;
+        width: 100% !important;
+      }
+    }
+
+    .font-justi {
+      font-size: 3.1vw;
+    }
+
+    ::ng-deep .ant-tabs-tab {
+      font-size: 3.3vw;
+    }
+
+    ::ng-deep .ant-tabs-left>.ant-tabs-nav .ant-tabs-tab {
+      padding: 0px 0.7vw 0px 0px;
+    }
+
+    ::ng-deep .ant-tabs-left>.ant-tabs-content-holder>.ant-tabs-content>.ant-tabs-tabpane {
+      padding-left: 1.5vw;
+    }
+
+    ::ng-deep .ant-card-grid {
+      padding: 2.4vw 1.4vw;
+    }
+
+    ::ng-deep .ant-card-head-title {
+      font-size: 3.4vw;
+      padding: 2.4vw 0.4vw;
+      margin-left: 2vw;
+    }
+
+    ::ng-deep .ant-card-head {
+      padding: 0vw 0.3vw;
+    }
+
+    ::ng-deep .ant-skeleton {
+      display: block;
+      width: 100%;
+    }
+
+    ::ng-deep .ant-card-body {
+      padding: 4vw;
+    }
+
+    ::ng-deep .profile-font {
+      font-size: 2vw;
+    }
+
+    .badge-block {
+      .card-grid {
+        display: block;
+        width: 50% !important;
+        text-align: center;
+
+        .badge-img {
+          display: block;
+          width: 18.75vw !important;
+          height: 18.75vw !important;
+          margin: 0 auto;
+        }
+      }
+    }
+
+    ::ng-deep .ant-card-contain-grid:not(.ant-card-loading) .ant-card-body {
+      margin-left: 6vw;
+    }
+
+    .cardo {
+      width: 60vw;
+    }
+
+    ::ng-deep .ant-ribbon.ant-ribbon-placement-end {
+      right: -26vw;
+      font-size: 3.1vw;
+    }
+
+    ::ng-deep .ant-card-meta-description {
+      font-size: 3.1vw;
+    }
+
+    ::ng-deep .ant-result-title {
+      font-size: 4.8vw;
+    }
+
+
+    ::ng-deep .ant-result-subtitle {
+      font-size: 3.8vw;
+    }
+
+    ::ng-deep .ant-upload-picture-card-wrapper {
+      margin-left: -22vw;
+    }
+
+    ::ng-deep .ant-upload-picture-card {
+      margin-left: -22vw;
+    }
+
+    ::ng-deep .ant-form-item .ant-form-item-label>label {
+      font-size: 3vw;
+    }
+
+    ::ng-deep .ant-form-item .ant-form-item-label {
+      padding: 0;
+    }
+
+    .save-btn {
+      margin-left: 0px;
+    }
+
+    ::ng-deep .ant-card-contain-grid:not(.ant-card-loading) .ant-card-body {
+      margin-left: 0vw;
+    }
+  }
+
+
+}

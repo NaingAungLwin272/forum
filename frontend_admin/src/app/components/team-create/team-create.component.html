@@ -1,0 +1,31 @@
+<div class="team">
+  <form [formGroup]="teamCreateForm" nz-form enctype="multipart/form-data" class="createForm">
+    <h2>Create Team</h2>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="8" nzFor="name" nzRequired>Team
+        Name</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input nz-input formControlName="name" name="name" type="text" class="name" id="name"
+          placeholder="Enter Team Name" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="8" nzFor="name" nzRequired>Department</nz-form-label>
+      <nz-form-control [nzSm]="12" [nzXs]="24">
+        <nz-select class="tag-input" nzMode="default" nzPlaceHolder="Select department" formControlName="department_id">
+          <nz-option *ngFor="let department of departmentData" [nzLabel]="department.name"
+            [nzValue]="department._id"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <div nz-row *nzModalFooter class="footer" nzJustify="end">
+    <button nz-button nz-col (click)="cancelCreate()">
+      Cancel
+    </button>
+    <button nz-button nz-col nzType="primary" (click)="showPopconfirm()" [disabled]="teamCreateForm.invalid"
+      [nzLoading]="isConfirmLoading">
+      Create
+    </button>
+  </div>
+</div>

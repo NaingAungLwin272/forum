@@ -1,0 +1,175 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/scm-dev1dev5/mtm-community-forum/user_rpc/pb";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+service UserService {
+  rpc CreateUser(CreateUserRequest) returns (UserResponse) {}
+  rpc GetUser(UserRequest) returns (UserResponse) {}
+  rpc GetUsers(GetUsersRequest) returns (stream User) {}
+  rpc UpdateUser(UpdateUserRequest) returns (UserResponse) {}
+  rpc DeleteUser(UserRequest) returns (DeleteUserResponse) {}
+  rpc FilterUser(FilterUserRequest) returns(stream User) {}
+  rpc CreateUsersWithCsv(CreateUserWithCsvRequest) returns(UserWithCsvResponse) {}
+  rpc UploadFile(FileUploadRequest) returns (FileUploadResponse) {}
+  rpc GetUserCount(FilterUserRequest) returns (UserCountResponse) {}
+  rpc GetUserByDisplayName(UserNameRequest) returns (UserNameResponse){}
+  rpc GetUserNotiCount(UserSummaryRequest) returns (UserNotiCountResponse){}
+}
+message FileUploadRequest {
+  bytes file_content = 1;
+  string file_name = 2;
+}
+
+message FileUploadResponse {
+  string file_url = 1;
+}
+enum Enum {
+  client = 0;
+  admin = 1;
+}
+
+message User {
+  string _id = 1;
+  string staff_id = 2;
+  string name = 3;
+  string email = 4;
+  string profile = 5;
+  string display_name = 6;
+  string role = 7;
+  string department_id = 8;
+  string team_id = 9;
+  google.protobuf.BoolValue deleted = 10;
+  string about_me = 11;
+  string address = 12;
+  string phone = 13;
+  bool mail_subscribe = 14;
+  google.protobuf.Timestamp dob = 15;
+  google.protobuf.Timestamp last_login = 16;
+  google.protobuf.Timestamp last_post = 17;
+  google.protobuf.Timestamp created_at = 18;
+  google.protobuf.Timestamp updated_at = 19;
+  string noti_token = 20;
+}
+
+message UserSummary {
+  int32 questions = 1;
+  int32 answers = 2;
+  int32 votes = 3;
+  int32 solved = 4;
+  int32 bookmarks = 5;
+  int32 badges = 6;
+  int32 notifications = 7;
+  int32 messages = 8;
+}
+
+message UserResponse {
+  string _id = 1;
+  string staff_id = 2;
+  string name = 3;
+  string email = 4;
+  string profile = 5;
+  string display_name = 6;
+  string role = 7;
+  string department_id = 8;
+  string team_id = 9;
+  google.protobuf.BoolValue deleted = 10;
+  string about_me = 11;
+  string address = 12;
+  string phone = 13;
+  bool mail_subscribe = 14;
+  google.protobuf.Timestamp dob = 15;
+  google.protobuf.Timestamp last_login = 16;
+  google.protobuf.Timestamp last_post = 17;
+  google.protobuf.Timestamp created_at = 18;
+  google.protobuf.Timestamp updated_at = 19;
+  string noti_token = 20;
+ }
+
+message CreateUserRequest {
+  string name = 1;
+  string staff_id = 2;
+  string email = 3;
+  string profile = 4;
+  string display_name = 5;
+  string password = 6;
+  string team_id = 7;
+  string department_id = 8;
+  int32 role = 9;
+  string about_me = 10;
+  google.protobuf.BoolValue deleted = 11;
+  string address = 12;
+  string phone = 13;
+  google.protobuf.Timestamp dob = 14;
+  bool mail_subscribe = 15;
+  string noti_token = 16;
+}
+
+message UserRequest { string _id = 1; }
+
+message UserNameRequest{string displayname=1;}
+
+message UserNameResponse{string _id=1;}
+
+message UpdateUserRequest {
+  string _id = 1;
+  optional string staff_id = 2;
+  optional string name = 3;
+  optional string email = 4;
+  optional string profile = 5;
+  optional string display_name = 6;
+  optional string password = 7;
+  optional string department_id = 8;
+  optional string team_id = 9;
+  optional int32 role = 10;
+  optional google.protobuf.BoolValue deleted = 11;
+  optional string about_me = 12;
+  optional string address = 13;
+  optional string phone = 14;
+  optional google.protobuf.Timestamp dob = 15;
+  optional bool mail_subscribe = 16;
+  optional google.protobuf.Timestamp last_post=17;
+  optional google.protobuf.Timestamp last_login=18;
+  optional string noti_token = 19;
+}
+
+message GetUsersRequest {
+  optional int64 page = 1;
+  optional int64 limit = 2;
+}
+
+message DeleteUserResponse { bool success = 1; }
+
+message FilterUserRequest {
+  optional int64 page = 1;
+  optional int64 limit = 2;
+  optional string display_name = 3;
+  optional string email = 4;
+  repeated string team_id = 5;
+  repeated string department_id = 6;
+  optional string name = 7;
+}
+
+message CreateUserWithCsvRequest {
+  repeated CreateUserRequest users = 1;
+}
+
+message UserWithCsvResponse {
+  repeated UserResponse users = 1;
+}
+
+message UserSummaryRequest {
+  string user_id = 1;
+}
+
+message UserSummaryResponse {
+  UserSummary user = 1;
+}
+
+message UserCountResponse { int64 count = 1; }
+
+message UserNotiCountResponse { int64 count=1; }

@@ -1,0 +1,9 @@
+<div class="comment">
+  <div class="ckeditor-container" [ngClass]="{'full-width': !showToolbar}">
+    <form [formGroup]="editorGroup" [ngClass]="{'fs':!showToolbar}">
+      <ckeditor [tabIndex]="showToolbar ? -1 : null" [formControlName]="'description'" [editor]="editor"
+        [config]="editorConfig" [ngClass]="darkTheme ? 'dark-theme' : 'light-theme'" class="ck-width">
+      </ckeditor>
+    </form>
+  </div>
+</div>

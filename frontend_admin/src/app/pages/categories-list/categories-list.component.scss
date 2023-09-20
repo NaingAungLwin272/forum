@@ -1,0 +1,31 @@
+.save {
+  margin-right: 8px;
+}
+
+.create-dp {
+  margin: 20px 0px;
+}
+
+.language {
+  @media screen and (max-width: 576px) {
+    .create-category {
+      width: 100vw;
+      max-width: 100%;
+    }
+  }
+}
+
+.tag { 
+  @media screen and (max-width: 576px) {
+    .create-category {
+      width: 100vw;
+      max-width: 100%;
+    }
+  }
+}
+
+.pagination-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}

@@ -1,0 +1,62 @@
+<nz-list [nzDataSource]="dataList" [nzRenderItem]="item" [nzItemLayout]="'vertical'" [nzLoading]="!data"
+  [ngClass]="!data ? 'no-list' : 'nz-list'">
+  <ng-template #item let-item>
+    <nz-list-item [nzActions]="[voteAction, createAtAction,commentAction]" [nzExtra]="extra">
+      <nz-skeleton [nzLoading]="!data" [nzActive]="true" [nzAvatar]="true">
+        <ng-template #voteAction>
+          <span class="date-font mr" nz-icon [nzType]="'heart'" [nzTheme]="item.vote_count>0?'fill':'outline'"></span>
+          <span class="date-font">{{ item.vote_count || 0 }}</span>
+        </ng-template>
+        <ng-template #solutionAction>
+          <span class="date-font mr" nz-icon nzType="check-square" nzTheme="outline"></span>
+          <span class="date-font">{{ item.is_solution.value ? 'Solved': 'UnSolved' }}</span>
+        </ng-template>
+        <ng-template #createAtAction>
+          <span class="date-font mr" nz-icon nzType="calendar" nzTheme="outline"></span>
+          <span class="date-font">{{ item.created_at.seconds * 1000 +
+            item.created_at.nanos / 1000000 | date: "yyyy/M/d HH:mm" }}
+          </span>
+        </ng-template>
+        <ng-template #commentAction>
+          <a (click)="viewComment(item)">
+            <span class="date-font mr" nz-icon nzType="comment" nzTheme="outline"></span>
+            <span class="date-font">
+              {{'detail'|translate}}
+            </span>
+          </a>
+        </ng-template>
+        <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription">
+
+          <ng-template #nzTitle>
+            <nz-avatar [nzShape]="'square'" [nzSize]="96" (click)="previewImg(item.user_profile)"
+              [nzSrc]="item.user_profile ? item.user_profile : '../../../assets/images/avatar.png'" nzTheme="outline"
+              class="uprofile"></nz-avatar>
+            <a href="/user/{{ item.user_id }}">{{ item.display_name }}</a>
+          </ng-template>
+
+          <ng-template #nzDescription>
+          </ng-template>
+        </nz-list-item-meta>
+
+        <div class="custom-container">
+          <p nz-typography class="nz-typography" nzEllipsis [nzEllipsisRows]="3">
+            {{removeHtmlTags(item.description)}}
+          </p>
+          <ng-template #copedIcon>
+            <span nz-icon nzType="smile" nzTheme="fill"></span>
+            you clicked!!
+          </ng-template>
+          <span class="icon-container">
+            <span class="expand-logo" nz-icon nzType="expand" nzTheme="outline" (click)="Show(item)"></span>
+          </span>
+        </div>
+        <ng-template #extra>
+        </ng-template>
+      </nz-skeleton>
+    </nz-list-item>
+  </ng-template>
+</nz-list>
+<div class="load-more">
+  <button nz-button nzType="primary" [nzLoading]="isLoading" (click)="loadMore()"
+    [disabled]="data.length === summaryCount" *ngIf="data && summaryCount > 10">{{'loadMore'|translate}}</button>
+</div>

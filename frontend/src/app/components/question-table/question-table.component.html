@@ -1,0 +1,94 @@
+<nz-table class="table" [nzFrontPagination]="false" [nzData]="data" [nzScroll]="{x:'1200px'}" [nzLoading]="!data">
+  <thead>
+    <tr>
+      <th>{{'title'|translate}}</th>
+      <th>{{'language'|translate}}</th>
+      <th>{{'tag'|translate}}</th>
+      <th>{{'participants'| translate}}</th>
+      <th (nzSortOrderChange)="onSortChange('solution', $event)" [nzShowSort]="true"
+        [nzSortOrder]="this.order !== 'solution' ? 'null' : 'ascend'">{{'status'|translate}}</th>
+      <th (nzSortOrderChange)="onSortChange('view', $event)" [nzShowSort]="true"
+        [nzSortOrder]="this.order !== 'view' ? 'null' : 'ascend'">
+        {{'view'|translate}}
+      </th>
+      <th (nzSortOrderChange)="onSortChange('vote', $event)" [nzShowSort]="true"
+        [nzSortOrder]="this.order !== 'vote' ? 'null' : 'ascend'">
+        {{'vote'|translate}}
+      </th>
+      <th (nzSortOrderChange)="onSortChange('reply', $event)" [nzShowSort]="true"
+        [nzSortOrder]="this.order !== 'reply' ? 'null' : 'ascend'">
+        {{'reply'|translate}}
+      </th>
+      <th>
+        {{'createdAt'|translate}}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let question of data">
+      <td>
+        <p nz-typography nzEllipsis [nzEllipsisRows]="3" nz-tooltip [nzTooltipTitle]="question.title">
+          <a [routerLink]="'/qa-detail/' + question._id" (click)="createViewByUserIdQuestionId(userId, question._id)">
+            <span class="qa-font">{{ question.title }}</span>
+          </a>
+        </p>
+      </td>
+      <td><nz-tag *ngFor="let language of question.language_ids; let i = index" [nzColor]="'cyan'" class="tag">
+          <span class="qa-font" (click)="filterByTag(language, 'language')">{{ getCategoryName(language) }}</span>
+        </nz-tag>
+      </td>
+      <td><nz-tag *ngFor=" let tag of question.tag_ids; let i=index" [nzColor]="'lime'" class="tag">
+          <span class="qa-font" (click)="filterByTag(tag, 'tag')">{{ getCategoryName(tag) }}</span>
+        </nz-tag>
+      </td>
+      <td>
+        <nz-avatar-group class="ava-gp">
+          <ng-container *ngFor="let profile of question.user_ids; let i = index; let last = last">
+            <a [href]="'/user/' + profile" [ngClass]="darkTheme ? 'lightOne' : 'darkOne'">
+              <ng-container *ngIf="i < 2">
+                <nz-avatar [nzSrc]="getUserImageLink(profile)" nzTheme="outline" nz-tooltip
+                  [nzTooltipTitle]="getUserName(profile)" (click)="$event.stopPropagation();" class="profile">
+                </nz-avatar>
+              </ng-container>
+              <nz-avatar *ngIf="i === 2 && question.user_ids.length > 2" nzTheme="outline" [nzText]="'+'+i"
+                class="profile remaining-avatar">
+              </nz-avatar>
+            </a>
+          </ng-container>
+        </nz-avatar-group>
+      </td>
+      <td>
+        <span class="qa-font">
+          {{ question.solution_count > 0 ? 'Solved': 'UnSolved' }}
+        </span>
+      </td>
+      <td>
+        <span class="qa-font">
+          {{ question.view_count || '0' }}
+        </span>
+      </td>
+      <td>
+        <span class="qa-font">
+          {{ question.vote_count || '0' }}
+        </span>
+      </td>
+      <td>
+        <span class="qa-font">
+          {{ question.reply_count || '0' }}
+        </span>
+      </td>
+      <td>
+        <span class="qa-font">
+          {{ question.created_at.seconds * 1000 + question.created_at.nanos /
+          1000000 | date: "yyyy/M/d HH:mm" }}
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td [nzAlign]="'center'" [colSpan]="9" class="loadAlign">
+        <button nz-button nzType="primary" (click)="loadMore()" *ngIf="summaryCount > 10" [nzLoading]="isLoading"
+          [disabled]="data.length === summaryCount"><span class="btn-load">{{'loadMore'|translate}}</span></button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

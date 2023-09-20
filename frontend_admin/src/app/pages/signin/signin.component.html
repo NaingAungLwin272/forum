@@ -1,0 +1,44 @@
+<div class="signin-container">
+  <h3 nz-typography>MTM Community Forum</h3>
+  <nz-card class="signin-card">
+    <h4 nz-typography nz-typography>Login</h4>
+    <form nz-form [formGroup]="signinForm" (ngSubmit)="signin()">
+      <nz-form-item nzJustify="space-between" nz-row>
+        <nz-form-label [nzMd]="9" [nzSm]="24" nzRequired nzFor="email">email</nz-form-label>
+        <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="Please enter a valid email address.">
+          <input nz-input formControlName="email" id="email" (input)="onInput($event)" [nzAutocomplete]="auto" placeholder="Write Email"/>
+          <nz-autocomplete #auto>
+            <nz-auto-option *ngFor="let option of options" [nzValue]="option">{{ option }}</nz-auto-option>
+          </nz-autocomplete>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nzJustify="space-between" nz-row>
+        <nz-form-label [nzMd]="9" [nzSm]="24" nzFor="password" nzRequired>password</nz-form-label>
+        <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="Password required.">
+          <nz-input-group [nzSuffix]="suffixTemplate">
+            <input [type]="passwordVisible ? 'text' : 'password'" id="password" nz-input formControlName="password" placeholder="Write Password"/>
+          </nz-input-group>
+          <ng-template #suffixTemplate>
+            <span nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+              (click)="passwordVisible = !passwordVisible"></span>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nzJustify="space-between" nz-row>
+        <nz-form-control [nzMd]="{ span: 14, offset: 10 }" [nzSm]="{ span: 24, offset: 1 }">
+          <label nz-checkbox formControlName="is_remember_me">
+            <span nz-typography>Remember Me</span>
+          </label>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nzJustify="space-between" nz-row>
+        <nz-form-control [nzMd]="{ span: 14, offset: 10 }" [nzSm]="{ span: 24, offset: 1 }">
+          <button nz-button nzType="primary" [disabled]="!signinForm.valid">Login</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-card>
+  <span nz-typography class="password-reminder">
+    <a routerLink="/password-reminder">Forgot your password?</a>
+  </span>
+</div>

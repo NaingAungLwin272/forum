@@ -1,0 +1,82 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+}
+
+.dark {
+  body {
+    background-color: #000;
+  }
+
+  .reaction {
+    background-color: #262626;
+    padding: 16px;
+  }
+}
+
+.default {
+  body {
+    background-color: #F0F2F5;
+  }
+
+  .reaction {
+    background-color: #f5f5f5;
+    padding: 16px;
+  }
+}
+
+// .ck.ck-editor .ck-editor__top .ck-sticky-panel .ck-toolbar {
+//   border: none;
+// }
+
+.dark {
+
+  /* Custom dark mode styles */
+  .ck.ck-editor__main>.ck-editor__editable {
+    background-color: #262626;
+    color: #fff;
+    border: none;
+  }
+
+  .ck.ck-toolbar {
+    background-color: #222;
+    color: #fff;
+  }
+
+  .ck.ck-toolbar a,
+  .ck.ck-toolbar button {
+    color: #fff;
+  }
+}
+
+.orange {
+  color: #fa541c;
+}
+
+.qa-detail {
+  .ant-avatar-string {
+    position: absolute;
+    left: 57%;
+    transform-origin: 0 center;
+  }
+
+  .ant-avatar-group .ant-avatar:not(:first-child) {
+    margin-left: -6px;
+  }
+
+  .ant-collapse>.ant-collapse-item>.ant-collapse-header {
+    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
+  }
+
+}

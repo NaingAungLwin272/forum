@@ -1,0 +1,230 @@
+<div class="user">
+  <div nz-row nzJustify="end" nzAlign="middle" class="row" [nzGutter]="16">
+    <div nz-col [nzXs]="24" [nzXl]="{span:3,offset:5}" [nzLg]="4" [nzMd]="6" [nzSm]="8" class="user-col">
+      <button nz-button nzType="primary" class="create-qa" (click)="createUserModal()">
+        <span nz-icon nzType="plus-circle"></span>
+        Create User
+      </button>
+    </div>
+    <div nz-col [nzXs]="24" [nzXl]="{span:3}" [nzLg]="4" [nzMd]="6" [nzSm]="8" class="user-col">
+      <button nz-button nzType="primary" class="create-qa" (click)="downloadTableDataToCsv()">
+        <span nz-icon nzType="download"></span>
+        Download CSV
+      </button>
+    </div>
+    <div nz-col [nzXs]="24" [nzXl]="3" [nzLg]="4" [nzMd]="6" [nzSm]="8" class="user-col">
+      <nz-upload [nzTransformFile]="transformFile">
+        <button nz-button class="create-qa">
+          <span nz-icon nzType="upload"></span>
+          Upload CSV
+        </button>
+      </nz-upload>
+    </div>
+  </div>
+  <nz-collapse>
+    <nz-collapse-panel nzHeader="Filter By:">
+      <form nz-form nzLayout="vertical" [formGroup]="filterForm">
+        <div nz-row nzJustify="start" nzAlign="middle" [nzGutter]="['8', '8']">
+          <div nz-col [nzSm]="{span: 24}" [nzXs]="{span: 24}" [nzLg]="{span: 6}">
+            <nz-form-item>
+              <nz-form-label>Name</nz-form-label>
+              <nz-form-control>
+                <input type="text" nz-input placeholder="Please input name" formControlName="name">
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSm]="{span: 24}" [nzXs]="{span: 24}" [nzLg]="{span: 6}">
+            <nz-form-item>
+              <nz-form-label>Email</nz-form-label>
+              <nz-form-control>
+                <input type="text" nz-input placeholder="Please input email" formControlName="email"
+                  (input)="onInput($event)" [nzAutocomplete]="auto">
+                <nz-autocomplete #auto>
+                  <nz-auto-option *ngFor="let option of options" [nzValue]="option">{{ option }}</nz-auto-option>
+                </nz-autocomplete>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSm]="{span: 24}" [nzXs]="{span: 24}" [nzLg]="{span: 6}">
+            <nz-form-item>
+              <nz-form-label>Department</nz-form-label>
+              <nz-form-control>
+                <nz-select [nzMaxTagCount]="2" [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple"
+                  nzPlaceHolder="Please select" formControlName="department_id">
+                  <nz-option *ngFor="let department of departmentData" [nzLabel]="department.name"
+                    [nzValue]="department._id"></nz-option>
+                </nz-select>
+                <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSm]="{span: 24}" [nzXs]="{span: 24}" [nzLg]="{span: 6}">
+            <nz-form-item>
+              <nz-form-label>Team</nz-form-label>
+              <nz-form-control>
+                <nz-select [nzMaxTagCount]="2" [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple"
+                  nzPlaceHolder="Please select" formControlName="team_id">
+                  <nz-option *ngFor="let team of teamData" [nzLabel]="team.name" [nzValue]="team._id"></nz-option>
+                </nz-select>
+                <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="['8']">
+          <div nz-col>
+            <nz-form-item>
+              <nz-form-control>
+                <button nz-button nzType="primary" (click)="filterUser(1, 10); getUserCount()">Search</button>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="clear-btn">
+            <nz-form-item>
+              <nz-form-control>
+                <button nz-button (click)="clearFilterData()">Clear</button>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </form>
+    </nz-collapse-panel>
+  </nz-collapse>
+  <nz-card class="user-list">
+    <nz-table [nzData]="userData" [nzShowPagination]="false" [nzScroll]="{ x: '1100px' }" [nzPageIndex]="pageIndex">
+      <thead>
+        <tr>
+          <th><nz-form-label nzRequired [nzNoColon]="true">Staff ID</nz-form-label></th>
+          <th><nz-form-label nzRequired [nzNoColon]="true">Name</nz-form-label></th>
+          <th><nz-form-label nzRequired [nzNoColon]="true">Display Name</nz-form-label></th>
+          <th><nz-form-label nzRequired [nzNoColon]="true">Email</nz-form-label></th>
+          <th><nz-form-label nzRequired [nzNoColon]="true">Role</nz-form-label></th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th><nz-form-label nzRequired [nzNoColon]="true">Department</nz-form-label></th>
+          <th><nz-form-label nzRequired [nzNoColon]="true">Team</nz-form-label></th>
+          <th>Last Login</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of userData">
+          <ng-container *ngIf="data._id !== clickedId; else editTemplate">
+            <td>{{data.staff_id}}</td>
+            <td>{{data.name}}</td>
+            <td>{{data.display_name}}</td>
+            <td>{{data.email}}</td>
+            <td>{{data.role}}</td>
+            <td *ngIf="data.phone; else No">{{data.phone}}</td>
+            <td *ngIf="data.address; else No">{{data.address}}</td>
+            <ng-template #No>
+              <td><span class="dashed">-</span></td>
+            </ng-template>
+            <td>{{data.department_name}}</td>
+            <td>{{data.team_name}}</td>
+            <td *ngIf="data?.last_login?.seconds > 0; else notLogin">{{(data.last_login?.seconds * 1000 +
+              data?.last_login?.nanos / 1000000) | date: "yyyy/M/d HH:mm"}}</td>
+            <ng-template #notLogin>
+              <td><span class="dashed">-</span></td>
+            </ng-template>
+            <td>
+              <a href="{{frontendUrl}}/user/{{data._id}}?access_token={{accessToken}}&login_user_id={{loginUserId}}"
+                target="_blank" nz-button [nzSize]="'small'" nzType="link">Detail</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a (click)="startEdit(data._id)" nz-button [nzSize]="'small'" nzType="link">Edit</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a nz-popconfirm nzPopconfirmTitle="Are you sure to delete?" (nzOnConfirm)="confirm(data._id)"
+                (nzOnCancel)="cancel()" nz-button [nzSize]="'small'" nzType="link">Delete</a>
+            </td>
+          </ng-container>
+          <form nz-form [formGroup]="editForm">
+            <ng-template #editTemplate>
+              <td>
+                <nz-form-control [nzSpan]="20">
+                  <input nz-input type="text" nz-input formControlName="staff_id" />
+                </nz-form-control>
+              </td>
+              <td>
+                <nz-form-control [nzSpan]="20">
+                  <input nz-input type="text" nz-input formControlName="name" />
+                </nz-form-control>
+              </td>
+              <td>
+                <nz-form-control [nzSpan]="20">
+                  <input nz-input type="text" nz-input formControlName="display_name" />
+                </nz-form-control>
+              </td>
+              <td>
+                <nz-form-control [nzSpan]="20">
+                  <input type="text" nz-input formControlName="email" (input)="onInput($event)"
+                    [nzAutocomplete]="auto" />
+                  <nz-autocomplete #auto>
+                    <nz-auto-option *ngFor="let option of options" [nzValue]="option">{{ option }}</nz-auto-option>
+                  </nz-autocomplete>
+                </nz-form-control>
+              </td>
+              <td>
+                <nz-form-control [nzSpan]="20">
+                  <nz-select name="select-validate" nzMode="default" formControlName="role"
+                    [ngModel]="data.role === 'manager' ? 1 : data.role === 'bse' ? 2 :  data.role === 'leader' ? 3: data.role === 'sub leader' ? 4 : data.role === 'senior' ? 5 : 6">
+                    <nz-option [nzValue]="1" nzLabel="manager"></nz-option>
+                    <nz-option [nzValue]="2" nzLabel="bse"></nz-option>
+                    <nz-option [nzValue]="3" nzLabel="leader"></nz-option>
+                    <nz-option [nzValue]="4" nzLabel="sub leader"></nz-option>
+                    <nz-option [nzValue]="5" nzLabel="senior"></nz-option>
+                    <nz-option [nzValue]="6" nzLabel="junior"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </td>
+              <td>
+                <nz-form-control [nzSpan]="20">
+                  <input nz-input type="text" nz-input formControlName="phone" />
+                </nz-form-control>
+              </td>
+              <td>
+                <nz-form-control [nzSpan]="20">
+                  <input nz-input type="text" nz-input formControlName="address" />
+                </nz-form-control>
+              </td>
+              <td>
+                <nz-form-control [nzSpan]="24">
+                  <nz-select class="tag-input" nzMode="default" nzPlaceHolder="Department"
+                    formControlName="department_id">
+                    <nz-option *ngFor="let department of departmentData" [nzLabel]="department.name"
+                      [nzValue]="department._id"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </td>
+              <td>
+                <nz-form-control [nzSpan]="24">
+                  <nz-select class="tag-input" nzMode="default" nzPlaceHolder="Team" formControlName="team_id">
+                    <ng-container *ngFor="let team of teamData">
+                      <nz-option *ngIf="editForm.controls['department_id'].value === team.department_id"
+                        [nzLabel]="team.name" [nzValue]="team._id"></nz-option>
+                    </ng-container>
+                  </nz-select>
+                </nz-form-control>
+              </td>
+              <td *ngIf="data?.last_post?.seconds > 0; else notLogin">{{(data.last_login?.seconds * 1000 +
+                data?.last_post?.nanos / 1000000) | date: "yyyy/M/d HH:mm"}}</td>
+              <ng-template #notLogin>
+                <td><span class="dashed">-</span></td>
+              </ng-template>
+              <td>
+                <a nz-popconfirm nz-button [nzSize]="'small'" nzType="link" nzPopconfirmTitle="Are you sure to update?"
+                  [disabled]="editForm.invalid" (nzOnConfirm)="updateUser(data._id)"
+                  (nzOnCancel)="cancelEdit()">Save</a>
+                <a (click)="cancelEdit()" nz-button nzType="link" [nzSize]="'small'">Cancel</a>
+              </td>
+            </ng-template>
+          </form>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div class="pagination-wrapper">
+      <nz-pagination [nzPageIndex]="pageIndex" [nzTotal]="totalUsers" [nzPageSize]="pageSize"
+        (nzPageIndexChange)="pageIndexChanged($event)" nzShowQuickJumper>
+      </nz-pagination>
+    </div>
+  </nz-card>
+</div>

@@ -1,0 +1,117 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/scm-dev1dev5/mtm-community-forum/features_rpc/pb";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+service QuestionService {
+    rpc CreateQuestion(CreateQuestionRequest) returns (QuestionResponse) {}
+    rpc GetQuestions(GetQuestionsRequest) returns (stream Question) {}
+    rpc GetQuestion(QuestionRequest) returns (QuestionResponse) {}
+    rpc UpdateQuestion(UpdateQuestionRequest) returns (QuestionResponse) {}
+    rpc DeleteQuestion(QuestionRequest) returns (DeleteQuestionResponse) {}
+    rpc GetQuestionByUserId(QuestionResquestByUserId) returns (stream Question) {}
+    rpc GetQuestionCount(QuestionResquestByUserId) returns (QuestionCountResponse) {}
+    rpc FilterQuestion (FilterQuestionRequest) returns (stream Question) {}
+    rpc GetQuestionCountAll(GetQuestionCountRequest) returns (QuestionCountResponse) {}
+    rpc GetFilteredQuestionCount (FilterQuestionRequest) returns (QuestionCountResponse) {}
+}
+
+message Question {
+    string _id = 1;
+    string user_id = 2;
+    string title = 3;
+    repeated string language_ids = 4;
+    repeated string tag_ids=5;
+    uint64 view_count = 6;
+    uint64 vote_count = 7;
+    uint64 reply_count = 8;
+    uint64 solution_count = 9;
+    repeated string user_ids= 10;
+    google.protobuf.BoolValue is_deleted = 11;
+    google.protobuf.Timestamp created_at = 12;
+    google.protobuf.Timestamp updated_at = 13;
+
+}
+message GetQuestionCountRequest {
+
+}
+
+message QuestionResponse {
+    string _id = 1;
+    string user_id = 2;
+    string title = 3;
+    repeated string language_ids = 4;
+    repeated string tag_ids = 5;
+    uint64 view_count = 6;
+    uint64 vote_count = 7;
+    uint64 reply_count = 8;
+    uint64 solution_count = 9;
+    repeated string user_ids= 10;
+    google.protobuf.BoolValue is_deleted = 11;
+    google.protobuf.Timestamp created_at = 12;
+    google.protobuf.Timestamp updated_at = 13;
+}
+
+message GetQuestionsRequest {
+    optional int64 page = 1;
+    optional int64 limit = 2;
+    optional string sort = 3;
+    optional string order = 4;
+}
+
+message CreateQuestionRequest {
+    string user_id = 1;
+    string title= 2;
+    repeated string language_ids = 3;
+    repeated string tag_ids=4;
+    uint64 view_count = 5;
+    uint64 vote_count = 6;
+    uint64 reply_count = 7;
+    repeated string user_ids= 8;
+    optional bool is_deleted = 9;
+    uint64 solution_count = 10;
+}
+
+message UpdateQuestionRequest {
+    string _id = 1;
+    optional string title = 2;
+    repeated string language_ids = 3;
+    repeated string tag_ids=4;
+    optional uint64 view_count = 5;
+    optional uint64 vote_count = 6;
+    optional uint64 reply_count = 7;
+    uint64 solution_count = 8;
+    optional bool is_deleted = 9;
+    repeated string user_ids = 10;
+    google.protobuf.Timestamp updated_at = 11;
+
+}
+
+message QuestionRequest { string _id = 1; }
+
+message DeleteQuestionResponse { bool success = 1; }
+
+message QuestionResquestByUserId {
+    string user_id = 1;
+    optional int64 page = 2;
+    optional int64 limit = 3;
+    optional string sort = 4;
+    optional string order = 5;
+}
+
+message QuestionCountResponse { int64 count = 1;}
+
+message FilterQuestionRequest {
+    optional int64 page = 1;
+    optional int64 limit = 2;
+    repeated string language_id = 3;
+    repeated string tag_id = 4;
+    repeated string user_id = 5;
+    optional string tile = 6;
+    optional string sort = 7;
+    optional string order = 8;
+}

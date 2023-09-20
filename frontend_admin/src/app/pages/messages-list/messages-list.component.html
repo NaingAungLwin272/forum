@@ -1,0 +1,59 @@
+<div class="container">
+  <form nz-form nzLayout="vertical" [formGroup]="msgForm" class="form">
+    <nz-form-item>
+      <nz-form-label nzRequired>Name</nz-form-label>
+      <nz-form-control>
+        <input type="text" nz-input formControlName="name" placeholder="Write Name"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>Link</nz-form-label>
+      <nz-form-control>
+        <input type="text" nz-input formControlName="link" placeholder="Write Link"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired>Description</nz-form-label>
+      <nz-textarea-count [nzMaxCharacterCount]="2000">
+        <textarea nz-input rows="2" placeholder="Write Description" formControlName="description"></textarea>
+      </nz-textarea-count>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <nz-radio-group nzButtonStyle="solid" [(ngModel)]="selectedOption" (ngModelChange)="onOptionChange()"
+          [ngModelOptions]="{standalone: true}">
+          <label nz-radio-button [nzValue]="'User'">User</label>
+          <label nz-radio-button [nzValue]="'Team'">Team</label>
+          <label nz-radio-button [nzValue]="'Department'">Department</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired>{{selectedOption}}</nz-form-label>
+      <nz-form-control>
+        <nz-select nzMode="multiple" nzPlaceHolder="Select {{ selectedOption }}" formControlName="user_id">
+          <ng-container *ngIf="selectedOption === 'User'">
+            <nz-option *ngFor="let user of userData" [nzLabel]="user.name" [nzValue]="user._id"></nz-option>
+          </ng-container>
+          <ng-container *ngIf="selectedOption === 'Team'">
+            <nz-option *ngFor="let team of teamData" [nzLabel]="team.name + ' (' + team.department_name + ')'"
+              [nzValue]="team._id"></nz-option>
+          </ng-container>
+          <ng-container *ngIf="selectedOption === 'Department'">
+            <nz-option *ngFor="let department of departmentData" [nzLabel]="department.name"
+              [nzValue]="department._id"></nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <div nz-row class="footer" [nzJustify]="'end'">
+      <button nz-button nz-col class="clear-btn" nzType="primary" (click)="showPopconfirm()"
+        [disabled]="msgForm.invalid">
+        Send Message
+      </button>
+      <button nz-button nz-col class="clear-btn" (click)="clear()">
+        Clear
+      </button>
+    </div>
+  </form>
+</div>

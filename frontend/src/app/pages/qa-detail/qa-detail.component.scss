@@ -1,0 +1,274 @@
+// .l-inner {
+//   max-width: 1280px;
+//   margin: 0 auto;
+// }
+
+.qa-detail {
+  width: calc(100vw - 100px);
+  max-width: 1600px;
+
+  .profile {
+    cursor: pointer;
+  }
+
+  .lightOne {
+    color: #fff;
+  }
+
+  .darkOne {
+    color: #000;
+  }
+
+  .darkOne:hover,
+  .lightOne:hover {
+    color: #fa541c;
+  }
+
+  .reaction,
+  .edit {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 16px 0;
+
+    .ant-btn-link {
+      font-size: 18px;
+    }
+
+  }
+
+  .no-pointer {
+    pointer-events: none;
+  }
+
+  .collapse-comment {
+    width: 91.7%;
+    margin: 1% 0% 1% 8.4%;
+    // margin-top: 2%;
+  }
+
+
+  .profile {
+    .remaining-avatar {
+      text-align: center;
+    }
+  }
+
+  .collapsePanel {
+    position: relative;
+
+    .solutionVoteText {
+      display: inline-block;
+      position: absolute;
+      left: 4%;
+      top: 25%;
+    }
+
+    .ava-gp {
+      position: absolute;
+      top: 15%;
+      right: 1%;
+    }
+  }
+
+  .topava {
+    margin-top: 1%;
+  }
+
+  .solutionCount {
+    position: absolute;
+    left: 1.5%;
+  }
+
+}
+
+.soluLink {
+  font-size: 14px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.ck-width {
+  display: block;
+}
+
+
+.common-a {
+  font-size: 17px;
+}
+
+.taglan {
+  font-size: 12px;
+}
+
+.addCom {
+  font-size: 14px;
+}
+
+.head3 {
+  font-size: 35px !important;
+}
+
+::ng-deep .ck.ck-toolbar {
+  border: none !important;
+}
+
+::ng-deep .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+  border-color: var(--ck-color-base-border);
+  min-height: 65px;
+}
+
+.dark-theme ::ng-deep .ck-content pre code {
+  color: #fff;
+}
+
+.dark-theme ::ng-deep .ck-content pre {
+  color: #fff;
+  font-size: 14px;
+}
+
+.light-theme ::ng-deep .ck-content pre code {
+  color: #000;
+}
+
+.light-theme ::ng-deep .ck-content pre {
+  font-size: 14px;
+  color: #000;
+}
+
+.dark-theme ::ng-deep .ck-content .mention {
+  color: #fa541c;
+}
+
+.dark-theme ::ng-deep .ck-content pre {
+  color: #fff;
+}
+
+::ng-deep .ck.ck-editor__editable_inline>:last-child {
+  font-size: 14px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1180px) {
+  .qa-detail {
+    width: calc(100vw - 3.021vw);
+
+    .profile {
+      cursor: pointer;
+    }
+
+    .reaction,
+    .edit {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 2.083vw 0;
+
+      .ant-btn-link {
+        font-size: 2.344vw;
+      }
+
+    }
+
+    .no-pointer {
+      pointer-events: none;
+    }
+
+  }
+
+  .common-a {
+    font-size: 2.4vw;
+  }
+
+  .common-create {
+    font-size: 1.7vw;
+  }
+
+  .common-anchor {
+    font-size: 1.4vw;
+  }
+
+  .dark-theme ::ng-deep .ck-content pre {
+    font-size: 1.823vw;
+  }
+
+  .light-theme ::ng-deep .ck-content pre {
+    font-size: 1.823vw;
+  }
+
+  ::ng-deep .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+    border-color: var(--ck-color-base-border);
+    min-height: 8.464vw;
+  }
+
+  ::ng-deep .ck.ck-editor__editable_inline>:last-child {
+    font-size: 1.823vw;
+  }
+
+  ::ng-deep .ant-row-center {
+    justify-content: left;
+    margin-left: 28vw !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .common-a {
+    font-size: 2.213vw;
+  }
+
+  .qa-detail {
+    width: calc(100vw - 2.625vw);
+
+    .profile {
+      cursor: pointer;
+    }
+
+    .qa-block {
+      margin-top: 17vw;
+    }
+
+    .reaction,
+    .edit {
+      padding: 1vw 0;
+      width: 100%;
+
+      .ant-btn-link {
+        font-size: 2.813vw;
+      }
+
+    }
+
+  }
+
+  .common-create {
+    font-size: 2vw;
+  }
+
+  .common-a {
+    font-size: 3.4vw;
+  }
+
+  .anchor {
+    display: none;
+  }
+
+  .dark-theme ::ng-deep .ck-content pre {
+    font-size: 2.888vw;
+  }
+
+  .light-theme ::ng-deep .ck-content pre {
+    font-size: 2.888vw;
+  }
+
+  ::ng-deep .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+    min-height: 10.156vw;
+  }
+
+  ::ng-deep .ck.ck-editor__editable_inline>:last-child {
+    font-size: 2.888vw;
+  }
+
+  ::ng-deep .ant-row-center {
+    justify-content: left;
+    margin-left: 24vw !important;
+  }
+}

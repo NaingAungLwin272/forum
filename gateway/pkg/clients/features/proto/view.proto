@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/scm-dev1dev5/mtm-community-forum/features_rpc/pb";
+
+import "google/protobuf/timestamp.proto";
+
+service ViewService {
+    rpc CreateView(CreateViewRequest) returns (ViewResponse) {}
+    rpc GetViews(GetViewsRequest) returns (stream View) {}
+    rpc GetView(ViewRequest) returns (ViewResponse) {}
+    rpc UpdateView(UpdateViewRequest) returns (ViewResponse) {}
+    rpc DeleteView(ViewRequest) returns (DeleteViewResponse) {}
+    rpc GetViewsByUserId(ViewRequestByUserId) returns (stream View){}
+    rpc GetViewsByUserIdQuestionId(ViewRequestByUserIdQuestionId) returns (stream View) {}
+}
+
+message View {
+    string _id = 1;
+    string user_id = 2;
+    string question_id = 3;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5;
+}
+
+message ViewResponse {
+    string _id = 1;
+    string user_id = 2;
+    string question_id = 3;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5;
+}
+
+message GetViewsRequest {
+    optional int64 page = 1;
+    optional int64 limit = 2;
+}
+
+message CreateViewRequest {
+    string user_id = 1;
+    string question_id = 2;
+}
+
+message UpdateViewRequest {
+    string _id = 1;
+    optional string user_id = 2;
+    optional string question_id = 3;
+}
+
+message ViewRequest {
+    string _id = 1;
+}
+
+message DeleteViewResponse {
+    bool success = 1;
+}
+
+message ViewRequestByUserIdQuestionId { 
+    string user_id = 1;
+    string question_id = 2;
+    optional int64 page = 3;
+    optional int64 limit = 4;
+}
+
+message ViewRequestByUserId { string user_id =  1;}

@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/scm-dev1dev5/mtm-community-forum/badges_rpc/pb";
+
+import "google/protobuf/timestamp.proto";
+
+service UserBadgeService {
+  rpc CreateUserBadge(CreateUserBadgeRequest) returns (UserBadgeResponse) {}
+  rpc GetUserBadge(UserBadgeRequest) returns (UserBadgeResponse) {}
+  rpc GetUserBadges(GetUserBadgesRequest) returns (UserBadgeResponseList) {}
+  rpc GetUserBadgesOfUser(GetUserBadgesOfUserRequest) returns (UserBadgeResponseList) {}
+  rpc UpdateUserBadge(UpdateUserBadgeRequest) returns (UserBadgeResponse) {}
+  rpc DeleteUserBadge(UserBadgeRequest) returns (DeleteUserBadgeResponse) {}
+  rpc GetBadgeCount(BadgeRequestByUserId) returns (BadgeCountResponse) {}
+}
+
+message UserBadge {
+  string _id = 1;
+  string user_id = 2;
+  string badge_id = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+message CreateUserBadgeRequest {
+  string user_id = 1;
+  string badge_id = 2;
+}
+
+message UserBadgeRequest {
+  string user_id = 1;
+  string badge_id = 2;
+}
+
+message UpdateUserBadgeRequest {
+  string user_id = 1;
+  optional string badge_id = 2;
+}
+
+message GetUserBadgesRequest {
+  optional int64 page = 1;
+  optional int64 limit = 2;
+}
+
+message GetUserBadgesOfUserRequest {
+  string user_id = 1;
+}
+
+message UserBadgeResponse { UserBadge user_badge = 1; }
+
+message UserBadgeResponseList {
+  repeated UserBadge user_badges = 1;
+}
+
+message DeleteUserBadgeResponse { bool success = 1; }
+
+message BadgeRequestByUserId { string user_id =  1;}
+
+message BadgeCountResponse { int64 count = 1;}

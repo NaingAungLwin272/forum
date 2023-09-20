@@ -1,0 +1,6 @@
+<ckeditor class="myce" [ngModel]="userModalData.description" [ngClass]="darkTheme ? 'dark-theme' : 'light-theme'"
+    [disabled]="true" [editor]="editor" [config]="editorConfig">
+</ckeditor>
+<div *nzModalFooter>
+    <button nz-button nzType="default" (click)="cancel()">{{'close' | translate}}</button>
+</div>

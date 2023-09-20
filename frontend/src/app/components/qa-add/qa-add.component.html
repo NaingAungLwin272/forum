@@ -1,0 +1,62 @@
+<form nz-form [formGroup]="qaAddForm" (ngSubmit)="submitForm()">
+  <div nz-row nzJustify="start" nzAlign="top" [nzGutter]="['8', '8']">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-control>
+          <input type="text" nz-input formControlName="title" [placeholder]="'selectTitle'|translate" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzXl]="{span:12}" [nzLg]="{span:12}" [nzMd]="{span:24}" [nzSm]="{span:24}" [nzXs]="{span:24}">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-select nzMode="multiple" [nzPlaceHolder]="'selectLanguage'|translate" formControlName="language_ids">
+            <ng-container *ngFor="let item of categoryData">
+              {{item.type}}
+              <nz-option *ngIf="item.type === 1" [nzLabel]="item.name" [nzValue]="item._id"></nz-option>
+            </ng-container>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzXl]="{span:12}" [nzLg]="{span:12}" [nzMd]="{span:24}" [nzSm]="{span:24}" [nzXs]="{span:24}">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-select nzMode="multiple" [nzPlaceHolder]="'selectTag'|translate" formControlName="tag_ids">
+            <ng-container *ngFor="let item of categoryData">
+              <nz-option *ngIf="item.type === 2" [nzLabel]="item.name" [nzValue]="item._id"></nz-option>
+            </ng-container>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <app-cke-editor [userData]="userData"></app-cke-editor>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzXl]="{span:12}" [nzLg]="{span:12}" [nzMd]="{span:24}" [nzSm]="{span:24}" [nzXs]="{span:24}">
+      <nz-form-item>
+        <nz-form-control>
+          <p style="margin-bottom: 20px;">
+            <label nz-checkbox [(ngModel)]="isCheckedButton" [ngModelOptions]="{standalone: true}">
+              {{ isCheckedButton ? 'Checked For All Mention User.' : 'Want To Mention All User For Your Question?' }}
+            </label>
+          </p>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col nzSpan="24">
+      <button nz-button [nzLoading]="isLoading" class="login-form-button login-form-margin" [nzType]="'primary'"
+        [disabled]="!qaAddForm.valid">
+        <span nz-icon nzType="plus-circle"></span>
+        {{'create'|translate}}
+      </button>
+    </div>
+  </div>
+</form>

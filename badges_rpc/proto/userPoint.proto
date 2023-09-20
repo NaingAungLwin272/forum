@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/scm-dev1dev5/mtm-community-forum/badges_rpc/pb";
+
+import "google/protobuf/timestamp.proto";
+
+service UserPointService {
+  rpc CreateUserPoint(CreateUserPointRequest) returns (UserPointResponse) {}
+  rpc GetUserPoint(UserPointRequest) returns (UserPointResponse) {}
+  rpc GetUserPoints(GetUserPointsRequest) returns (UserPointResponseList) {}
+  rpc UpdateUserPoint(UpdateUserPointRequest) returns (UserPointResponse) {}
+  rpc DeleteUserPoint(UserPointRequest) returns (DeleteUserPointResponse) {}
+  rpc EvaluatePoints(GetUserPointsRequest) returns (UserPointEvaluateResponse) {}
+}
+
+message UserPoint {
+  string _id = 1;
+  string user_id = 2;
+  int32 reaction_level = 3;
+  int32 qa_level = 4;
+  int32 question_count = 5;
+  int32 answer_count = 6;
+  int32 solved_count = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+}
+
+message CreateUserPointRequest {
+  string user_id = 1;
+  int32 reaction_level = 2;
+  int32 qa_level = 3;
+  int32 question_count = 4;
+  int32 answer_count = 5;
+  int32 solved_count = 6;
+}
+
+message UserPointRequest { string id = 1; }
+
+message UpdateUserPointRequest {
+  string user_id = 1;
+  int32 reaction_level = 2;
+  int32 qa_level = 3;
+  int32 question_count = 4;
+  int32 answer_count = 5;
+  int32 solved_count = 6;
+}
+
+message GetUserPointsRequest {
+  optional int64 page = 1;
+  optional int64 limit = 2;
+}
+
+message EvaluatePointsRequest {
+  string user_id = 1;
+}
+
+message UserPointResponse { UserPoint UserPoint = 1; }
+
+message UserPointEvaluateResponse { bool success = 1;}
+
+message UserPointResponseList {
+  repeated UserPoint user_points = 1;
+}
+
+message DeleteUserPointResponse { bool success = 1; }

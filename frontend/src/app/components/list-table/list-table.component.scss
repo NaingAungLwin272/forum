@@ -1,0 +1,114 @@
+.nz-list {
+  min-height: 500px;
+}
+
+.no-list {
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.word-infinite-container {
+  display: block;
+  width: 100%;
+  height: 600px;
+
+  .word-list {
+    padding: 0 5px 10px 0;
+  }
+
+  .load-more {
+    display: flex;
+    justify-content: center;
+    margin-top: 28px;
+  }
+}
+
+.custom-container {
+  display: flex;
+  align-items: baseline;
+}
+
+.icon-container {
+  margin-left: auto;
+}
+
+.nz-typography {
+  font-size: 14px;
+  text-align: justify;
+  padding-right: 15px;
+}
+
+.expand-logo {
+  color: #fa541c;
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.expand-logo:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.expand-logo {
+  color: #fa541c;
+}
+
+.mr {
+  margin-right: 3px;
+}
+
+.detailLink {
+  color: initial;
+  transition: color 0.3s ease;
+}
+
+.detailLink:hover {
+  color: #fa541c;
+}
+
+.uprofile {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 50%;
+  margin-right: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .nz-typography {
+    font-size: 2.688vw;
+    padding-right: 2.344vw;
+  }
+
+  .uprofile {
+    width: 6vw !important;
+    height: 6vw !important;
+    border-radius: 50%;
+    margin-right: 0.7vw;
+  }
+
+  .date-font {
+    font-size: 2.688vw;
+  }
+
+  .mr {
+    margin-right: 1vw;
+  }
+
+  ::ng-deep .anticon svg {
+    font-size: 2.688vw;
+  }
+
+  ::ng-deep .profile-font {
+    font-size: 2vw;
+  }
+
+  ::ng-deep .ant-list-item-meta-title>a {
+    font-size: 3vw;
+  }
+}

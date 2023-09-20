@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/scm-dev1dev5/mtm-community-forum/mail_rpc/pb";
+
+service MailService{
+    rpc ForgetPasswordMail(ForgetMailRequest) returns (MailResponse){}
+    rpc SendMail(MailRequest) returns (MailResponse){}
+}
+
+message ForgetMailRequest{
+    string email = 1;
+    string token = 2;
+    optional string origin = 3;
+    string name = 4;
+}
+
+message MailRequest{
+    string email = 1;
+    string subject =2;
+    optional string link = 3;
+    int64 type = 4;
+}
+
+message MailResponse{
+    bool is_success = 1;
+}

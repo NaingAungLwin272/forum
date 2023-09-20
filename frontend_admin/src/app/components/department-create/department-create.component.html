@@ -1,0 +1,18 @@
+<div class="department">
+  <form [formGroup]="departmentCreateForm" nz-form class="createForm">
+    <h2>Create Department</h2>
+    <nz-form-item nzAlign="middle">
+      <nz-form-label [nzSpan]="8" nzFor="name" nzRequired>Department Name</nz-form-label>
+      <nz-form-control [nzSpan]="15">
+        <input nz-input formControlName="name" name="name" type="text" class="name" id="name" placeholder="Enter Department Name"/>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <div nz-row *nzModalFooter class="footer" nzJustify="end">
+    <button nz-col nz-button nzType="default" (click)="destroyModal()">Cancel</button>
+    <button nz-col nz-button nzType="primary" [disabled]="!departmentCreateForm.valid"
+      [nzLoading]="isConfirmLoading" (click)="showPopconfirm()">
+      Create
+    </button>
+  </div>
+</div>

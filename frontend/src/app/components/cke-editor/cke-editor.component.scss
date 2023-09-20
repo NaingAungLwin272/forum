@@ -1,0 +1,79 @@
+.comment {
+  .ckeditor-container {
+    z-index: 200;
+  }
+}
+
+:host ::ng-deep .ck-editor__editable_inline {
+  height: 280px !important;
+}
+
+.dark :host ::ng-deep .ck-editor__editable_inline {
+  position: relative;
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+::ng-deep .ck.ck-reset_all.ck-body.ck-rounded-corners {
+  position: relative !important;
+}
+
+::ng-deep .ck.ck-balloon-panel.ck-balloon-panel_caret_se.ck-balloon-panel_visible {
+  position: absolute !important;
+}
+
+.dark-theme ::ng-deep .ck-content .mention {
+  background: #4e4747 !important;
+  color: #fa541c !important;
+}
+
+.light-theme ::ng-deep .ck-content .mention {
+  color: #db3700 !important;
+}
+
+::ng-deep .ck.ck-list__item .ck-button.ck-on {
+  background-color: #db3700 !important;
+}
+
+.dark-theme ::ng-deep .ck-rounded-corners .ck.ck-button {
+  background-color: rgb(33, 33, 33);
+}
+
+.dark-theme ::ng-deep .ck-rounded-corners .ck.ck-button:hover {
+  background-color: rgb(43, 43, 43);
+}
+
+.dark-theme ::ng-deep .ck.ck-splitbutton:hover {
+  background-color: rgb(33, 33, 33);
+}
+
+.dark-theme ::ng-deep .ck.ck-splitbutton {
+  background-color: rgb(33, 33, 33);
+}
+
+.dark-theme ::ng-deep .ck .ck-dropdown .ck-code-block-dropdown:hover {
+  background-color: rgb(33, 33, 33);
+}
+
+.dark-theme ::ng-deep .ck ck-dropdown ck-code-block-dropdown {
+  background-color: rgb(52, 50, 50);
+}
+
+.dark-theme ::ng-deep .ck-content pre code {
+  color: #ffffff;
+}
+
+.full-width {
+  width: 1100px;
+  margin-left: 30px;
+  user-select: none;
+}
+
+.full-width ::ng-deep .ck-editor__editable {
+  user-select: none;
+  overflow: auto;
+}
+
+.ckeditor-container {
+  overflow-y: auto;
+}

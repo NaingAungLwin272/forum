@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/scm-dev1dev5/mtm-community-forum/features_rpc/pb";
+
+import "google/protobuf/timestamp.proto";
+
+service VoteService {
+    rpc CreateVote(CreateVoteRequest) returns(VoteResponse) {}
+    rpc GetVotes(GetVotesRequest) returns (stream Vote) {}
+    rpc GetVote(VoteRequest) returns (VoteResponse) {}
+    rpc UpdateVote(UpdateVoteRequest) returns (VoteResponse) {}
+    rpc DeleteVote(VoteRequest) returns (DeleteVoteResponse) {}
+    rpc GetVotesByUserId(VoteRequestByUserId) returns (stream Vote){}
+    rpc GetVoteCount(VoteRequestByUserId) returns (VoteCountResponse) {}
+    rpc GetVotesByUserIdQuestionId(VoteRequestByUserIdQuestionId) returns (stream Vote) {}
+}
+
+message Vote {
+    string _id = 1;
+    string user_id = 2;
+    string comment_id = 3;
+    string question_id = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+}
+
+message VoteResponse {
+    string _id = 1;
+    string user_id = 2;
+    string comment_id = 3;
+    string question_id = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+}
+
+message GetVotesRequest {
+    optional int64 page = 1;
+    optional int64 limit = 2;
+}
+
+message CreateVoteRequest {
+    string user_id = 1;
+    string comment_id = 2;
+    string question_id = 3;
+}
+
+message UpdateVoteRequest {
+    string _id = 1;
+    optional string user_id = 2;
+    optional string comment_id = 3;
+    optional string question_id = 4;
+}
+
+message VoteRequest {
+    string _id = 1;
+}
+
+message DeleteVoteResponse {
+    bool success = 1;
+}
+
+message VoteRequestByUserId { 
+    string user_id =  1;
+    optional int64 page = 2;
+    optional int64 limit = 3;
+}
+
+message VoteRequestByUserIdQuestionId { 
+    string user_id = 1;
+    string question_id = 2;
+    optional int64 page = 3;
+    optional int64 limit = 4;
+}
+
+message VoteCountResponse { int64 count = 1;}

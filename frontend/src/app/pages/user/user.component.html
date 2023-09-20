@@ -1,0 +1,497 @@
+<div class="user">
+  <nz-card class="user-summary">
+    <div nz-row nzJustify="start" nzAlign="middle">
+      <div nz-col [nzXl]="{span:1}" [nzLg]="{span:2}" [nzMd]="{span:2}" [nzSm]="{span:4}" [nzXs]="{span:8}">
+        <nz-avatar [nzShape]="'square'" [nzSize]="96" (click)="previewImg(userInfo?.profile)"
+          [nzSrc]="userInfo?.profile ? userInfo?.profile : '../../../assets/images/avatar.png'" nzTheme="outline"
+          class="profile"></nz-avatar>
+      </div>
+      <div nz-col [nzXl]="{span:20}" [nzLg]="{span:8,offset:3}" [nzMd]="{span:8,offset:3}" [nzSm]="{span:17}"
+        [nzXs]="{span:11}">
+        <h3 nz-typography class="profile-font"> {{userInfo?.display_name}}</h3>
+        <span class="profile-font" nz-typography>{{userInfo?.name}}</span>
+      </div>
+    </div>
+    <nz-divider></nz-divider>
+    <div nz-row nzJustify="start" nzAlign="middle">
+      <div nz-col [nzXl]="{span:5}" [nzLg]="{span:10}" [nzMd]="{span:10}" [nzXs]="{span:24}">
+        <h5 nz-typography class="title"><strong>{{'email'|translate}} :</strong></h5>
+        <span class="font-justi" nz-typography nzType="secondary">{{userInfo?.email}}</span>
+      </div>
+      <div nz-col [nzXl]="{span:4}" [nzLg]="{span:8}" [nzMd]="{span:8}" [nzXs]="{span:24}">
+        <h5 nz-typography class="title"><strong>{{'department'|translate}} :</strong></h5>
+        <span class="font-justi" nz-typography nzType="secondary">{{department?.name}}</span>
+      </div>
+      <div nz-col [nzXl]="{span:3}" [nzLg]="{span:6}" [nzMd]="{span:6}" [nzXs]="{span:24}">
+        <h5 nz-typography class="title"><strong>{{'team'|translate}} :</strong></h5>
+        <span class="font-justi" nz-typography nzType="secondary">{{team?.name}}</span>
+      </div>
+      <div nz-col [nzXl]="{span:4}" [nzLg]="{span:10}" [nzMd]="{span:10}" [nzXs]="{span:24}">
+        <h5 nz-typography class="title"><strong>{{'lastLogin'|translate}} :</strong></h5>
+        <span class="font-justi" nz-typography nzType="secondary">
+          <ng-container *ngIf="userInfo?.last_login.seconds>0;else noLogin">
+            {{
+            (userInfo?.last_login?.seconds * 1000 + userInfo?.last_login?.nanos / 1000000) | date: "yyyy/M/d HH:mm"
+            }}
+          </ng-container>
+          <ng-template #noLogin>
+            <span class="font-justi">{{'userNotLogIn'|translate}}</span>
+          </ng-template>
+        </span>
+      </div>
+      <div nz-col [nzXl]="{span:4}" [nzLg]="{span:8}" [nzMd]="{span:8}" [nzXs]="{span:24}">
+        <h5 nz-typography class="title"><strong>{{'lastPost'|translate}} :</strong></h5>
+        <span class="font-justi" nz-typography nzType="secondary">
+          <ng-container *ngIf="userInfo?.last_post?.seconds > 0; else noQuestion">
+            {{ (userInfo?.last_post?.seconds * 1000 + userInfo?.last_post?.nanos / 1000000) | date: "yyyy/M/d HH:mm" }}
+          </ng-container>
+          <ng-template #noQuestion>
+            <span class="font-justi">{{'postNotCreate'|translate}}</span>
+          </ng-template>
+        </span>
+      </div>
+      <div nz-col [nzXl]="{span:4}" [nzLg]="{span:6}" [nzMd]="{span:6}" [nzXs]="{span:24}">
+        <h5 nz-typography class="title"><strong>{{'join'|translate}} :</strong></h5>
+        <span class="font-justi" nz-typography nzType="secondary">{{userInfo?.created_at!.seconds
+          * 1000 +
+          userInfo?.created_at!.nanos / 1000000 | date: "yyyy/M/d HH:mm"
+          }}</span>
+      </div>
+    </div>
+  </nz-card>
+
+  <nz-card class="user-info">
+    <nz-tabset class="user-tabset" nzTabPosition="left" [(nzSelectedIndex)]="selectedTabIndex"
+      (nzSelectedIndexChange)="navigateToTabs($event)">
+      <nz-tab [nzTitle]="'summary' | translate">
+        <div class="summary-block">
+          <nz-card class="card" [nzTitle]="'summary' | translate">
+            <div nz-card-grid class="summary-grid" (click)="navigateToTabs(1)">
+              <span class="font-justi">
+                {{'question'|translate}}:
+                <ng-container *ngIf="userSummary.questions !== undefined;else spin">
+                  {{userSummary.questions}}
+                </ng-container>
+                <ng-template #spin>
+                  <nz-spin nzSimple [nzSize]="'small'" class="spin"></nz-spin>
+                </ng-template>
+              </span>
+            </div>
+            <div nz-card-grid class="summary-grid" (click)="navigateToTabs(2)">
+              <span class="font-justi">
+                {{'answer'|translate}}:
+                <ng-container *ngIf="userSummary.answers !== undefined;else spin">
+                  {{userSummary.answers}}
+                </ng-container>
+                <ng-template #spin>{{userSummary.answers}}
+                  <nz-spin nzSimple [nzSize]="'small'" class="spin"></nz-spin>
+                </ng-template>
+              </span>
+            </div>
+            <div nz-card-grid class="summary-grid" (click)="navigateToTabs(3)">
+              <span class="font-justi">
+                {{'vote'|translate}}:
+                <ng-container *ngIf="userSummary.votes !== undefined;else spin">
+                  {{userSummary.votes || 0}}
+                </ng-container>
+                <ng-template #spin>
+                  <nz-spin nzSimple [nzSize]="'small'" class="spin"></nz-spin>
+                </ng-template>
+              </span>
+            </div>
+            <div nz-card-grid class="summary-grid" (click)="navigateToTabs(4)">
+              <span class="font-justi">
+                {{'solve'|translate}}:
+                <ng-container *ngIf="userSummary.solved !== undefined;else spin">
+                  {{userSummary.solved || 0}}
+                </ng-container>
+                <ng-template #spin>
+                  <nz-spin nzSimple [nzSize]="'small'" class="spin"></nz-spin>
+                </ng-template>
+              </span>
+            </div>
+            <div nz-card-grid class="summary-grid" (click)="navigateToTabs(5)">
+              <span class="font-justi">
+                {{'bookmark'|translate}}:
+                <ng-container *ngIf="userSummary.bookmarks !== undefined;else spin">
+                  {{userSummary.bookmarks || 0}}
+                </ng-container>
+                <ng-template #spin>
+                  <nz-spin nzSimple [nzSize]="'small'" class="spin"></nz-spin>
+                </ng-template>
+              </span>
+            </div>
+            <div nz-card-grid class="summary-grid" (click)="navigateToTabs(6)">
+              <span class="font-justi">
+                {{'mention'|translate}}:
+                <ng-container *ngIf="userSummary.mentions !== undefined;else spin">
+                  {{userSummary.mentions || 0}}
+                </ng-container>
+                <ng-template #spin>
+                  <nz-spin nzSimple [nzSize]="'small'" class="spin"></nz-spin>
+                </ng-template>
+              </span>
+            </div>
+            <div nz-card-grid class="summary-grid" (click)="navigateToTabs(7)">
+              <span class="font-justi">
+                {{'badge'|translate}}:
+                <ng-container *ngIf="userSummary.badges !== undefined;else spin">
+                  {{userSummary.badges || 0}}
+                </ng-container>
+                <ng-template #spin>
+                  <nz-spin nzSimple [nzSize]="'small'" class="spin"></nz-spin>
+                </ng-template>
+              </span>
+            </div>
+            <div nz-card-grid class="summary-grid" (click)="navigateToTabs(8)" *ngIf="userId===loggedUserId">
+              <span class="font-justi">
+                {{'notification'|translate}}:
+                <ng-container *ngIf="userSummary.notifications !== undefined;else spin">
+                  {{userSummary.notifications || 0}}
+                </ng-container>
+                <ng-template #spin>
+                  <nz-spin nzSimple [nzSize]="'small'" class="spin"></nz-spin>
+                </ng-template>
+              </span>
+            </div>
+            <div nz-card-grid class="summary-grid" (click)="navigateToTabs(9)" *ngIf="userId===loggedUserId">
+              <span class="font-justi">
+                {{'message'|translate}}:
+                <ng-container *ngIf="userSummary.messages !== undefined;else spin">
+                  {{userSummary.messages || 0}}
+                </ng-container>
+                <ng-template #spin>
+                  <nz-spin nzSimple [nzSize]="'small'" class="spin"></nz-spin>
+                </ng-template>
+              </span>
+            </div>
+            <div nz-card-grid class="summary-grid" (click)="navigateToTabs(10)" *ngIf="userId===loggedUserId">
+              <span class="font-justi">
+                {{'editProfile'|translate}}
+              </span>
+            </div>
+          </nz-card>
+        </div>
+      </nz-tab>
+
+      <nz-tab [nzTitle]="'question'| translate">
+        <div class="question-block">
+          <app-question-table [data]="questionData" [categoryData]="categoryData" [type]="'user'"
+            [summaryCount]="userSummary.questions">
+          </app-question-table>
+        </div>
+      </nz-tab>
+
+      <nz-tab [nzTitle]="'answer'| translate">
+        <div class="answer-block">
+          <div class="vote-block">
+            <app-list-table [data]="answerData" [type]="'answers'" [summaryCount]="userSummary.answers" />
+          </div>
+        </div>
+      </nz-tab>
+
+      <nz-tab [nzTitle]="'vote'| translate">
+        <div class="vote-block">
+          <app-list-table [data]="vote" [type]="'vote'" [summaryCount]="userSummary.votes" />
+        </div>
+      </nz-tab>
+
+      <nz-tab [nzTitle]="'solve'| translate">
+        <div class="solve-block">
+          <app-list-table [data]="commentDataSolved" [type]="'solved'" [summaryCount]="userSummary.solved" />
+        </div>
+      </nz-tab>
+
+      <nz-tab [nzTitle]="'bookmark'| translate">
+        <div class="bookmark-block">
+          <app-list-table [data]="bookmark" [type]="'bookmark'" [summaryCount]="userSummary.bookmarks" />
+        </div>
+      </nz-tab>
+
+      <nz-tab [nzTitle]="'mention'| translate">
+        <div class="mention-block">
+          <app-list-table [data]="mentionData" [type]="'mention'" [summaryCount]="userSummary.mentions" />
+        </div>
+      </nz-tab>
+
+      <nz-tab [nzTitle]="nzTitle">
+        <ng-template #nzTitle>
+          {{'badge'| translate}}
+        </ng-template>
+        <div class="badge-block">
+          <nz-card [nzTitle]="nzSubTitleOne">
+            <ng-container *ngFor="let badge of badgeData">
+              <div nz-card-grid class="card-grid" *ngIf="badge.type === 2">
+                <ng-container *ngIf="isUserBadge(badge._id); else lock;">
+                  <img class="badge-img" nz-image [nzSrc]="'../../../assets/images/' + badge.name + '.png'"
+                    [alt]="badge.name" />
+                </ng-container>
+                <ng-template #lock>
+                  <img class="badge-img" nz-image [nzSrc]="'../../../assets/images/' + badge.name + '-locked.png'"
+                    [alt]="badge.name" />
+                </ng-template>
+              </div>
+            </ng-container>
+          </nz-card>
+          <ng-template #nzSubTitleOne>
+            {{'reactionLevel'|translate}}
+            <a nz-button nzType="link" nz-popover nzPopoverTitle="Reaction Level Calculation Formula"
+              [nzPopoverContent]="contentTemplateOne">
+              <span nz-icon nzType="question-circle" nzTheme="outline"></span>
+            </a>
+            <ng-template #contentTemplateOne>
+              <ul style="list-style-type:square;">
+                <li>Curious Tier:
+                  <ul style="list-style-type:circle;">
+                    <li>max-vote-count >= 5 and max-vote-count < 20</li>
+                  </ul>
+                </li>
+                <li>Good Tier:
+                  <ul style="list-style-type:circle;">
+                    <li>max-vote-count >= 20 and max-vote-count < 40 </li>
+                  </ul>
+                </li>
+                <li>Great Tier:
+                  <ul style="list-style-type:circle;">
+                    <li>max-vote-count >= 40 and max-vote-count < 60</li>
+                  </ul>
+                </li>
+                <li>Best Tier:
+                  <ul style="list-style-type:circle;">
+                    <li>max-vote-count >= 60 and max-vote-count < 150 </li>
+                  </ul>
+                </li>
+                <li>Excellent Tier:
+                  <ul style="list-style-type:circle;">
+                    <li>max-vote-count > 150</li>
+                  </ul>
+                </li>
+              </ul>
+              <span nz-typography nzType="secondary">It will open when you receive the badge, but the level will be
+                locked if you haven't yet earned it.</span>
+            </ng-template>
+          </ng-template>
+          <br />
+          <br />
+          <nz-card [nzTitle]="nzSubTitleTwo">
+            <ng-container *ngFor="let badge of badgeData">
+              <div nz-card-grid class="card-grid" *ngIf="badge.type === 1">
+                <ng-container *ngIf="isUserBadge(badge._id); else lock;">
+                  <img class="badge-img" nz-image [nzSrc]="'../../../assets/images/' + badge.name + '.png'"
+                    [alt]="badge.name" />
+                </ng-container>
+                <ng-template #lock>
+                  <img class="badge-img" nz-image [nzSrc]="'../../../assets/images/' + badge.name + '-locked.png'"
+                    [alt]="badge.name" />
+                </ng-template>
+              </div>
+            </ng-container>
+          </nz-card>
+          <ng-template #nzSubTitleTwo>
+            {{'qaLevel'|translate}}
+            <a nz-button nzType="link" nz-popover nzPopoverTitle="Question/Answer Level Calculation Formula"
+              [nzPopoverContent]="contentTemplateTwo">
+              <span nz-icon nzType="question-circle" nzTheme="outline"></span>
+            </a>
+            <ng-template #contentTemplateTwo>
+              <span nz-typography>Activity Point = AnswerCount + QuestionCount</span>
+              <ul style="list-style-type:square;">
+                <li>Bronze Tier:
+                  <ul style="list-style-type:circle;">
+                    <li>Criteria: No solved, but activity point >= 5</li>
+                  </ul>
+                </li>
+                <li>Silver Tier:
+                  <ul style="list-style-type:circle;">
+                    <li>Criteria: Solved >= 1</li>
+                    <ul style="list-style-type:disc;">
+                      <li>Activity Point: >= 20</li>
+                      <li>Activity Point: < 20 (if not met) -> Bronze</li>
+                    </ul>
+                  </ul>
+                </li>
+                <li>Gold Tier:
+                  <ul style="list-style-type:circle;">
+                    <li>Criteria: Solved >= 3</li>
+                    <ul style="list-style-type:disc;">
+                      <li>Activity Point: >= 40</li>
+                      <li>Activity Point: < 40 (if not met) -> Silver</li>
+                    </ul>
+                  </ul>
+                </li>
+                <li>Platinum Tier:
+                  <ul style="list-style-type:circle;">
+                    <li>Criteria: Solved >= 5 </li>
+                    <ul style="list-style-type:disc;">
+                      <li>Activity Point: >= 60</li>
+                      <li>Activity Point: < 60 (if not met) -> Gold</li>
+                    </ul>
+                  </ul>
+                </li>
+                <li>Diamond Tier:
+                  <ul style="list-style-type:circle;">
+                    <li>Criteria: SolvedCount >= 10 && Activity Point >= 150</li>
+                  </ul>
+                </li>
+              </ul>
+              <span nz-typography nzType="secondary">It will open when you receive the badge, but the level will be
+                locked if you haven't yet earned it.</span>
+            </ng-template>
+          </ng-template>
+        </div>
+      </nz-tab>
+
+      <nz-tab [nzTitle]="nzTitle" *ngIf="userId===loggedUserId" class="notiTag">
+        <ng-template #nzTitle>
+          {{'notification'|translate}}
+          <nz-badge nzStandalone [nzCount]="notiCount" [nzOverflowCount]="10" class="badgeNoti">
+
+          </nz-badge>
+        </ng-template>
+        <ng-container *ngIf="mappedNoti && mappedNoti.length > 0; else noData">
+          <div class="notification-block">
+            <nz-ribbon *ngFor="let notification of mappedNoti" [nzText]="getRibbonText(notification.type)"
+              [nzColor]="getRibbonColor(notification.type)">
+
+              <nz-card class="cardo" [nzTitle]="one" nzSize="small" [nzHoverable]="true"
+                (click)="navigateToLink(notification.link)">
+                <ng-template #one class="icon">
+                  <span class="icoo" *ngIf="notification.type===2" nz-icon nzType="rollback" nzTheme="outline"></span>
+                  <span class="icoo" *ngIf="notification.type===3" nz-icon nzType="user" nzTheme="outline"></span>
+                  <span class="icoo" *ngIf="notification.type===4" nz-icon nzType="check-square" nzTheme="fill"></span>
+                  <span class="icoo" *ngIf="notification.type===5" nz-icon nzType="heart" nzTheme="fill"></span>
+                  <span class="icoo" *ngIf="notification.type===6" nz-icon nzType="message" nzTheme="fill"></span>
+                  <span class="title">{{notification.title}}</span>
+                </ng-template>
+                <p [innerHTML]="notification.description" [class.truncate-text]="notification.type !== 6"></p>
+                <p class="created-atdo">{{notification.created_at}}</p>
+              </nz-card>
+              <br />
+            </nz-ribbon>
+          </div>
+          <button nz-button nzType="primary" (click)="loadMoreNoti()"
+            [disabled]="noti.length === userSummary.notifications"
+            *ngIf="userSummary.notifications > 10">{{'loadMore'|translate}}</button>
+        </ng-container>
+        <ng-template #noData>
+          <nz-empty class="no-data" nzNotFoundImage="simple"></nz-empty>
+        </ng-template>
+      </nz-tab>
+
+      <nz-tab [nzTitle]="'message'| translate" *ngIf="userId===loggedUserId">
+        <nz-result nzStatus="404" [nzTitle]="'notFound'|translate" [nzSubTitle]="'underConstruction'|translate">
+        </nz-result>
+      </nz-tab>
+
+      <nz-tab [nzTitle]="'editProfile'| translate" *ngIf="userId===loggedUserId">
+        <div class="edit-block">
+          <form [formGroup]="editProfileForm" nz-form enctype="multipart/form-data">
+            <div class="photo">
+              <nz-upload nzListType="picture-card" [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload"
+                (nzChange)="handleChange($event)" [nzFileList]="fileList"
+                nzAction="https://cors-anywhere-umhf.onrender.com/" #uploadComponent>
+                <img *ngIf="imageUrl" [src]="imageUrl?imageUrl:'../../../assets/images/avatar.png'" alt="Uploaded Image"
+                  class="full-size-image" />
+                <img *ngIf="!imageUrl" [src]="'../../../assets/images/avatar.png'" alt="Default Image"
+                  class="full-size-image" />
+              </nz-upload>
+            </div>
+            <div class="edit-form">
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="staff_id">{{'staffId'|translate}}</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <input nz-input formControlName="staff_id" name="staff_id" type="text" id="staff_id">
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="role">{{'role'|translate}}</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <input formControlName="role" nz-input name="role" type="text" id="role">
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="name" nzRequired>{{'name'|translate}}</nz-form-label>
+                <nz-form-control [nzSpan]="14" nzErrorTip="{{'enterName'|translate}}">
+                  <input formControlName="name" nz-input name="name" type="text" id="name"
+                    placeholder="{{'writeName'|translate}}">
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="display_name" nzRequired>{{'displayName'|translate}}</nz-form-label>
+                <nz-form-control [nzSpan]="14" nzErrorTip="{{'enterDName'|translate}}">
+                  <input formControlName="display_name" nz-input name="display_name" type="text" id="display_name"
+                    placeholder="{{'writeDName'|translate}}">
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="email" nzRequired>{{'email'|translate}}</nz-form-label>
+                <nz-form-control [nzSpan]="14" [nzErrorTip]="emailErrorTpl">
+                  <input nz-input formControlName="email" name="email" type="email" id="email" (input)="onInput($event)"
+                    [nzAutocomplete]="auto" placeholder="{{'writeEmail'|translate}}">
+                  <ng-template #emailErrorTpl let-control>
+                    <ng-container *ngIf="control.hasError('pattern')">{{'notValidEmail'|translate}}</ng-container>
+                    <ng-container *ngIf="control.hasError('required')">{{'inputEmail'|translate}}</ng-container>
+                  </ng-template>
+                  <nz-autocomplete #auto>
+                    <nz-auto-option *ngFor="let option of options" [nzValue]="option">{{ option }}</nz-auto-option>
+                  </nz-autocomplete>
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="staff_id">{{'phone'|translate}}</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <input nz-input formControlName="phone" name="phone" type="text" id="phone"
+                    placeholder="{{'writePhone'|translate}}">
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="address">{{'address'|translate}}</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <input nz-input formControlName="address" name="address" type="text" id="address"
+                    placeholder="{{'writeAddress'|translate}}">
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6">{{'aboutMe'|translate}}</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <nz-textarea-count [nzMaxCharacterCount]="2000">
+                    <textarea formControlName="about_me" nz-input name="about_me" placeholder="{{'writeYou'|translate}}"
+                      [nzAutosize]="{ minRows: 3, maxRows: 10 }" id="about_me"></textarea>
+                  </nz-textarea-count>
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <a (click)="changePasswordModal()" class="cp">{{'changePassword'|translate}}</a>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24">{{'dob'|translate}}</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <nz-date-picker formControlName="dob" [nzDisabledDate]="disabledDate"
+                    nzPlaceHolder="{{'enterDob'|translate}}"></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6">{{'mailSubcribe'|translate}}</nz-form-label>
+                <nz-form-control [nzSpan]="14" nzHasFeedback nzErrorTip="Please select!">
+                  <nz-radio-group formControlName="mail_subscribe">
+                    <label nz-radio [nzValue]="true">{{'subscribe'|translate}}</label>
+                    <label nz-radio [nzValue]="false">{{'unsubscribe'|translate}}</label>
+                  </nz-radio-group>
+                </nz-form-control>
+              </nz-form-item>
+              <div nz-row>
+                <div nz-col [nzSpan]="12">
+                  <button class="save-btn" nz-button [disabled]="!editProfileForm.valid" type="submit" nzType="primary"
+                    (click)="editProfile()" [nzSize]="'large'">
+                    <span nz-icon nzType="edit"></span>
+                    {{'saveProfile'|translate}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+</div>

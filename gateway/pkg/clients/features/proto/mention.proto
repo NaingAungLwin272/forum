@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/scm-dev1dev5/mtm-community-forum/features_rpc/pb";
+
+import "google/protobuf/timestamp.proto";
+
+service MentionService {
+    rpc CreateMention(CreateMentionRequest) returns(MentionResponse) {}
+    rpc GetMentions(GetMentionsRequest) returns (stream Mention) {}
+    rpc GetMention(MentionRequest) returns (MentionResponse) {}
+    rpc UpdateMention(UpdateMentionRequest) returns (MentionResponse) {}
+    rpc DeleteMention(MentionRequest) returns (DeleteMentionResponse) {}
+    rpc GetMentionsByUserId(MentionRequestByUserId) returns (stream Mention){}
+    rpc GetMentionCount(MentionRequestByUserId) returns (MentionCountResponse) {}
+}
+
+message Mention {
+    string _id = 1;
+    string user_id = 2;
+    string comment_id = 3;
+    string question_id = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+}
+
+message MentionResponse {
+    string _id = 1;
+    string user_id = 2;
+    string comment_id = 3;
+    string question_id = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+}
+
+message GetMentionsRequest {
+    optional int64 page = 1;
+    optional int64 limit = 2;
+}
+
+message CreateMentionRequest {
+    string user_id = 1;
+    string comment_id = 2;
+    string question_id = 3;
+}
+
+message UpdateMentionRequest {
+    string _id = 1;
+    optional string user_id = 2;
+    optional string comment_id = 3;
+    optional string question_id = 4;
+}
+
+message MentionRequest {
+    string _id = 1;
+}
+
+message DeleteMentionResponse {
+    bool success = 1;
+}
+
+message MentionRequestByUserId { 
+    string user_id =  1;
+    optional int64 page = 2;
+    optional int64 limit = 3;
+}
+
+message MentionCountResponse { int64 count = 1; }

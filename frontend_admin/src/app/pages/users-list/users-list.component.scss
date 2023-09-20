@@ -1,0 +1,61 @@
+.row {
+  margin-bottom: 15px;
+
+  .user-col {
+    text-align: right;
+  }
+}
+
+.user {
+  .dashed {
+    font-size: 25px;
+    text-align: center;
+  }
+
+  .create-qa {
+    display: block;
+    width: 100%;
+  }
+}
+
+.user {
+  @media screen and (max-width: 576px) {
+    .create-qa {
+      width: 100vw;
+      max-width: 100%;
+      margin-top: 15px;
+    }
+
+    .upload {
+      width: 100vw;
+      max-width: 100%;
+      margin-top: 15px;
+    }
+  }
+}
+
+.create-qa {
+  margin: 0 0 5px 0;
+}
+
+.user-list {
+  margin: 25px 0 0;
+
+  .tag {
+    margin: 0 5px 5px 0;
+  }
+
+  .load-more {
+    text-align: center;
+  }
+}
+
+.pagination-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+::ng-deep .ant-upload.ant-upload-select {
+  display: block;
+}

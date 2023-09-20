@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/scm-dev1dev5/mtm-community-forum/features_rpc/pb";
+
+import "google/protobuf/timestamp.proto";
+
+service BookmarkService {
+    rpc CreateBookmark(CreateBookmarkRequest) returns (BookmarkResponse) {}
+    rpc GetBookmarks(GetBookmarksRequest) returns (stream Bookmark) {}
+    rpc GetBookmark(BookmarkRequest) returns (BookmarkResponse) {}
+    rpc UpdateBookmark(UpdateBookmarkRequest) returns (BookmarkResponse) {}
+    rpc DeleteBookmark(BookmarkRequest) returns (DeleteBookmarkResponse) {}
+    rpc GetBookmarksByUserId(BookmarkRequestByUserId) returns (stream Bookmark) {}
+    rpc GetBookmarkCount(BookmarkRequestByUserId) returns (BookmarkCountResponse) {}
+    rpc GetBookmarksByUserIdQuestionId(BookmarkRequestByUserIdQuestionId) returns (stream Bookmark) {}
+}
+
+message Bookmark {
+    string _id = 1;
+    string user_id = 2;
+    string comment_id = 3;
+    string question_id = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+}
+
+message BookmarkResponse {
+    string _id = 1;
+    string user_id = 2;
+    string comment_id = 3;
+    string question_id = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+}
+
+message GetBookmarksRequest {
+    optional int64 page = 1;
+    optional int64 limit = 2;
+}
+
+message CreateBookmarkRequest {
+    string user_id = 1;
+    string comment_id = 2;
+    string question_id = 3;
+}
+
+message UpdateBookmarkRequest {
+    string _id = 1;
+    optional string user_id = 2;
+    optional string comment_id = 3;
+    optional string question_id = 4;
+}
+
+message BookmarkRequest {
+    string _id = 1;
+}
+
+message DeleteBookmarkResponse {
+    bool success = 1;
+}
+
+message BookmarkRequestByUserId { 
+    string user_id =  1;
+    optional int64 page = 2;
+    optional int64 limit = 3;
+}
+
+message BookmarkRequestByUserIdQuestionId { 
+    string user_id = 1;
+    string question_id = 2;
+    optional int64 page = 3;
+    optional int64 limit = 4;
+}
+
+message BookmarkCountResponse { int32 count = 1;}

@@ -1,0 +1,128 @@
+version: '3'
+services:
+  # mongodb:
+  #   image: mongo
+  #   container_name: mongodb
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongodb-data:/data/db
+  #   tty: true
+  #   networks:
+  #     - mtm-community-forum-backend
+
+  user-rpc:
+    build:
+      context: .
+      dockerfile: ./user_rpc/Dockerfile
+    container_name: user-rpc
+    # depends_on:
+    #   - mongodb
+    ports:
+      - '50051:50051'
+    volumes:
+      - ./user_rpc:/app
+      - ./cert:/cert
+    tty: true
+    networks:
+      - mtm-community-forum-backend
+
+  badges-rpc:
+    build:
+      context: .
+      dockerfile: ./badges_rpc/Dockerfile
+    container_name: badges-rpc
+    # depends_on:
+    #   - mongodb
+    ports:
+      - '50052:50052'
+    volumes:
+      - ./badges_rpc:/app
+      - ./cert:/cert
+    tty: true
+    networks:
+      - mtm-community-forum-backend
+
+  category-rpc:
+    build:
+      context: .
+      dockerfile: ./category_rpc/Dockerfile
+    container_name: category-rpc
+    # depends_on:
+    #   - mongodb
+    ports:
+      - '50053:50053'
+    volumes:
+      - ./category_rpc:/app
+      - ./cert:/cert
+    tty: true
+    networks:
+      - mtm-community-forum-backend
+
+  features-rpc:
+    build:
+      context: .
+      dockerfile: ./features_rpc/Dockerfile
+    container_name: features-rpc
+    # depends_on:
+    #   - mongodb
+    ports:
+      - '50054:50054'
+    volumes:
+      - ./features_rpc:/app
+      - ./cert:/cert
+    tty: true
+    networks:
+      - mtm-community-forum-backend
+
+  mail-rpc:
+    build:
+      context: .
+      dockerfile: ./mail_rpc/Dockerfile
+    container_name: mail-rpc
+    # depends_on:
+    #   - mongodb
+    ports:
+      - '50055:50055'
+    volumes:
+      - ./mail_rpc:/app
+      - ./cert:/cert
+    tty: true
+    networks:
+      - mtm-community-forum-backend
+
+  noti-rpc:
+    build:
+      context: .
+      dockerfile: ./noti_rpc/Dockerfile
+    container_name: noti-rpc
+    # depends_on:
+    #   - mongodb
+    ports:
+      - '50056:50056'
+    volumes:
+      - ./noti_rpc:/app
+      - ./cert:/cert
+    tty: true
+    networks:
+      - mtm-community-forum-backend
+
+  # gateway:
+  #   build:
+  #     context: .
+  #     dockerfile: ./gateway/Dockerfile
+  #   container_name: gateway
+  #   ports:
+  #     - '3000:3000'
+  #   volumes:
+  #     - ./gateway:/app
+  #     - ./cert:/cert
+  #   networks:
+  #     - mtm-community-forum-backend
+  
+volumes:
+  mongodb-data:
+
+networks:
+  mtm-community-forum-backend:
+    driver: bridge

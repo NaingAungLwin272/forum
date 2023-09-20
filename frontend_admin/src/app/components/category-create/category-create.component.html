@@ -1,0 +1,23 @@
+<div class="category">
+  <form [formGroup]="categoryCreateForm" nz-form class="createForm">
+    <h2>
+      Create {{ categoryType === "language" ? "Language" : "Tag" }}
+    </h2>
+    <nz-form-item nzAlign="middle">
+      <nz-form-label [nzSpan]="8" nzFor="name" nzRequired>{{
+        categoryType === "language" ? "Language" : "Tag"
+        }}
+        Name</nz-form-label>
+      <nz-form-control [nzSpan]="15">
+        <input nz-input formControlName="name" name="name" type="text" class="name" id="name" placeholder="Write {{ categoryType === 'language' ? 'Language' : 'Tag' }}"/>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <div nz-row *nzModalFooter class="footer" nzJustify="end">
+    <button nz-col nz-button nzType="default" (click)="destroyModal()">Cancel</button>
+    <button nz-col nz-button nzType="primary" [disabled]="!categoryCreateForm.valid" [nzLoading]="isLoading"
+      (click)="showPopconfirm()">
+      Create
+    </button>
+  </div>
+</div>

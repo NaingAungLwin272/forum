@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/scm-dev1dev5/mtm-community-forum/user_rpc/pb";
+
+import "google/protobuf/timestamp.proto";
+
+service DeparmentService {
+  rpc CreateDeparment(CreateDeparmentRequest) returns (DeparmentResponse) {}
+  rpc GetDeparment(DeparmentRequest) returns (DeparmentResponse) {}
+  rpc GetDeparments(GetDeparmentsRequest) returns (stream Deparment) {}
+  rpc UpdateDeparment(DeparmentUpdateRequest) returns (DeparmentResponse) {}
+  rpc DeleteDeparment(DeparmentRequest) returns (DeleteDeparmentResponse) {}
+  rpc GetDepartmentCount(GetDeparmentsRequest) returns (DepartmentCountResponse) {}
+}
+
+message Deparment {
+  string _id = 1;
+  string name = 2;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message DeparmentResponse { string _id = 1;
+  string name = 2;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message CreateDeparmentRequest {
+  string name = 1;
+}
+
+message DeparmentRequest { string _id = 1; }
+
+message DeparmentUpdateRequest {
+  string _id = 1;
+  optional string name = 2;
+}
+
+message GetDeparmentsRequest {
+  optional int64 page = 1;
+  optional int64 limit = 2;
+}
+
+message DeleteDeparmentResponse { bool success = 1; }
+
+message DepartmentCountResponse { int64 count = 1; }

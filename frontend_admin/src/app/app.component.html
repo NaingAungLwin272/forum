@@ -1,0 +1,37 @@
+<nz-layout class="app-layout">
+  <nz-sider class="menu-sidebar" [nzWidth]="312" nzCollapsible nzTheme="light" [nzCollapsedWidth]="0"
+    [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+    <app-menu></app-menu>
+  </nz-sider>
+  <nz-layout>
+    <nz-header *ngIf="isLogin && currentRoute !== '/signin'">
+      <div class="app-header">
+        <div nz-row nzJustify="space-between" nzAlign="middle">
+          <div nz-col nzSpan="12" class="header-left">
+            <nz-space nzSize="small" class="header-trigger">
+              <span class="menu-icon" *nzSpaceItem nz-icon nzType="menu" nzTheme="outline"
+                (click)="isCollapsed = !isCollapsed"></span>
+              <span class="menu-title" *nzSpaceItem nz-typography>
+                <a routerLink="/">MTM Community Forum (Admin)</a>
+              </span>
+            </nz-space>
+          </div>
+          <div nz-col nzSpan="12" class="header-right">
+            <nz-space nzSize="small">
+              <ng-container *ngIf="userData">
+                <span *nzSpaceItem nz-typography><strong>{{userData.name}}</strong></span>
+                <nz-avatar *nzSpaceItem nzIcon="user"
+                  [nzSrc]="userData.profile?userData.profile:'../../../assets/images/avatar.png'"></nz-avatar>
+              </ng-container>
+            </nz-space>
+          </div>
+        </div>
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content" (click)="isCollapsed = true">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
